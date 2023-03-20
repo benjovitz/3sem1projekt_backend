@@ -36,5 +36,12 @@ public class CinemaController {
     CinemaResponse addCinema(@RequestBody CinemaRequest request){
         return cinemaService.addCinema(request);
     }
-
+    @DeleteMapping("/{id}")
+    void deleteCinema(@PathVariable Long id){
+        cinemaService.deleteCinema(id);
+    }
+    @PutMapping("/{id}")
+    CinemaResponse editCinema(@PathVariable Long id, @RequestBody CinemaRequest request){
+        return cinemaService.editCinema(id, request);
+    }
 }

@@ -20,6 +20,12 @@ public class CinemaService {
     public CinemaService(CinemaRepository cinemaRepository){
         this.cinemaRepository=cinemaRepository;
     }
+    public Cinema findCinemaByID(Long id) {
+        cinemaRepository.findById(String.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Cinema with this ID doesnt exist"));
+        Optional<Cinema> c = cinemaRepository.findById(String.valueOf(id));
+        Cinema cinema = c.orElseThrow();
+        return cinema;
+    }
 
     public List<CinemaResponse> getCinemas() {
         List<Cinema> cinemas = cinemaRepository.findAll();
@@ -28,16 +34,12 @@ public class CinemaService {
     }
 
     public CinemaResponse findCinema(Long id) {
-        cinemaRepository.findById(String.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Cinema with this ID doesnt exist"));
-        Optional<Cinema> c = cinemaRepository.findById(String.valueOf(id));
-        Cinema cinema = c.orElseThrow();
+        Cinema cinema = findCinemaByID(id);
         return new CinemaResponse(cinema);
     }
 
     public ResponseEntity<Boolean> addRating(Long id, Double rating) {
-        cinemaRepository.findById(String.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Cinema with this ID doesnt exist"));
-        Optional<Cinema> c = cinemaRepository.findById(String.valueOf(id));
-        Cinema cinema = c.orElseThrow();
+        Cinema cinema = findCinemaByID(id);
         int ratingCounter = cinema.getNumberOfRatings();
         double currentRating = cinema.getRating();
         double newRating = currentRating*ratingCounter;
@@ -52,6 +54,22 @@ public class CinemaService {
 
     public CinemaResponse addCinema(CinemaRequest request) {
         Cinema cinema = CinemaRequest.getCinemaEntity(request);
+        cinemaRepository.save(cinema);
+        return new CinemaResponse(cinema);
+    }
+
+    public void deleteCinema(Long id) {
+        Cinema cinema = findCinemaByID(id);
+        cinemaRepository.delete(cinema);
+    }
+
+    public CinemaResponse editCinema(Long id, CinemaRequest request) {
+        Cinema cinema = findCinemaByID(id);
+        Optional.ofNullable(request.getCity()).ifPresent(cinema::setCity);
+        Optional.ofNullable(request.getZip()).ifPresent(cinema::setZip);
+        Optional.ofNullable(request.getStreet()).ifPresent(cinema::setStreet);
+        Optional.ofNullable(request.getDescription()).ifPresent(cinema::setDescription);
+        Optional.ofNullable(request.getUser()).ifPresent(cinema::setUser);
         cinemaRepository.save(cinema);
         return new CinemaResponse(cinema);
     }
