@@ -18,7 +18,7 @@ class InfoResponse {
         this.info = info;
     }
 }
-
+//hej
 @RestController
 @RequestMapping("/api/demo")
 @CrossOrigin
