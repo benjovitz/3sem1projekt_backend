@@ -1,7 +1,9 @@
-package dat3.jwtdemo.configuration;
+package dat3.voximovies.configuration;
 
 import dat3.security.entity.Role;
 import dat3.security.entity.UserWithRoles;
+import dat3.voximovies.entity.Cinema;
+import dat3.voximovies.repository.CinemaRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
@@ -11,16 +13,31 @@ import dat3.security.repository.UserWithRolesRepository;
 public class SetupDevUsers implements ApplicationRunner {
 
     UserWithRolesRepository userWithRolesRepository;
+    CinemaRepository cinemaRepository;
     String passwordUsedByAll;
 
-    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository) {
+    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, CinemaRepository cinemaRepository) {
         this.userWithRolesRepository = userWithRolesRepository;
         passwordUsedByAll = "test12";
+        this.cinemaRepository=cinemaRepository;
     }
 
     @Override
     public void run(ApplicationArguments args) {
         setupUserWithRoleUsers();
+        setupCinemas();
+    }
+
+    private void setupCinemas() {
+        // Create some mock data for cinemas
+        Cinema c1 = Cinema.builder().user("Daniel").description("God hjemmebio").zip("2000").street("Aurikelvej 6 1 tv").city("Frederiksberg").build();
+        Cinema c2 = Cinema.builder().user("Anna").description("Cozy and comfortable").zip("2100").street("Østerbrogade 12 3 th").city("København Ø").build();
+        Cinema c3 = Cinema.builder().user("Lars").description("Modern and spacious").zip("2300").street("Amagerbrogade 45 2 mf").city("København S").build();
+        Cinema c4 = Cinema.builder().user("Maria").description("Small but charming").zip("2200").street("Nørrebrogade 33 4 tv").city("København N").build();
+        cinemaRepository.save(c1);
+        cinemaRepository.save(c2);
+        cinemaRepository.save(c3);
+        cinemaRepository.save(c4);
     }
 
     /*****************************************************************************************
