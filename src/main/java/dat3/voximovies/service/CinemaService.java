@@ -21,7 +21,7 @@ public class CinemaService {
         this.cinemaRepository=cinemaRepository;
     }
     public Cinema findCinemaByID(Long id) {
-        Cinema cinema = cinemaRepository.findById(String.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Cinema with this ID doesnt exist"));
+        Cinema cinema = cinemaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Cinema with this ID doesnt exist"));
         return cinema;
     }
 
