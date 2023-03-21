@@ -33,4 +33,12 @@ public class Review {
         this.comment = comment;
         this.cinema = cinemaReview;
     }
+    /*
+    public Review(String user, Double score, String comment,User reviewedUser) {
+        this.user = user;
+        this.score = score;
+        this.comment = comment;
+        this.reviewedUser = reviewedUser;
+    }
+     */
 }

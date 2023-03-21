@@ -21,9 +21,7 @@ public class CinemaService {
         this.cinemaRepository=cinemaRepository;
     }
     public Cinema findCinemaByID(Long id) {
-        cinemaRepository.findById(String.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Cinema with this ID doesnt exist"));
-        Optional<Cinema> c = cinemaRepository.findById(String.valueOf(id));
-        Cinema cinema = c.orElseThrow();
+        Cinema cinema = cinemaRepository.findById(String.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Cinema with this ID doesnt exist"));
         return cinema;
     }
 
@@ -37,7 +35,7 @@ public class CinemaService {
         Cinema cinema = findCinemaByID(id);
         return new CinemaResponse(cinema);
     }
-
+    /*
     public ResponseEntity<Boolean> addRating(Long id, Double rating) {
         Cinema cinema = findCinemaByID(id);
         int ratingCounter = cinema.getNumberOfRatings();
@@ -51,7 +49,7 @@ public class CinemaService {
         cinemaRepository.save(cinema);
         return null;
     }
-
+    */
     public CinemaResponse addCinema(CinemaRequest request) {
         Cinema cinema = CinemaRequest.getCinemaEntity(request);
         cinemaRepository.save(cinema);

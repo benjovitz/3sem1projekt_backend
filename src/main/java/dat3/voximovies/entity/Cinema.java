@@ -50,16 +50,4 @@ public class Cinema {
     private double rating;
     private int numberOfRatings;
     //private User contactPerson;
-
-
-
-
-    //For cinemaholders to create their cinema
-    public Cinema(String description, String street, String city, String zip, String user) {
-        this.description = description;
-        this.street = street;
-        this.city = city;
-        this.zip = zip;
-        this.user = user;
-    }
 }

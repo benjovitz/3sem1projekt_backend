@@ -24,6 +24,7 @@ public class CinemaRequest {
     //private User contactPerson;
 
     public static Cinema getCinemaEntity(CinemaRequest c){
-        return new Cinema(c.getDescription(), c.getStreet(), c.city,c.getZip(),c.getUser());
+        Cinema cinema =  Cinema.builder().description(c.getDescription()).street(c.getStreet()).city(c.getCity()).zip(c.getZip()).user(c.getUser()).build();
+        return cinema;
     }
 }
