@@ -1,4 +1,4 @@
-package dat3.jwtdemo.configuration;
+package dat3.voximovies.configuration;
 
 import dat3.security.entity.Role;
 import dat3.security.entity.UserWithRoles;
