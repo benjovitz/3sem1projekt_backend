@@ -9,6 +9,11 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
 import dat3.security.repository.UserWithRolesRepository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Controller
 public class SetupDevUsers implements ApplicationRunner {
 
@@ -34,6 +39,12 @@ public class SetupDevUsers implements ApplicationRunner {
         Cinema c2 = Cinema.builder().user("Anna").description("Cozy and comfortable").zip("2100").street("Østerbrogade 12 3 th").city("København Ø").build();
         Cinema c3 = Cinema.builder().user("Lars").description("Modern and spacious").zip("2300").street("Amagerbrogade 45 2 mf").city("København S").build();
         Cinema c4 = Cinema.builder().user("Maria").description("Small but charming").zip("2200").street("Nørrebrogade 33 4 tv").city("København N").build();
+       List<String> seats = new ArrayList<>();
+       seats.add("a1");
+       seats.add("a2");
+       seats.add("a3");
+       c1.setSeats(seats);
+       c2.setSeats(seats);
         cinemaRepository.save(c1);
         cinemaRepository.save(c2);
         cinemaRepository.save(c3);
