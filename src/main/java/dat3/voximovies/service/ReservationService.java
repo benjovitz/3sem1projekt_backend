@@ -38,13 +38,19 @@ public class ReservationService {
     return reservationResponses;
   }
 
-  public List<ReservationResponse> getAllShowReservations(int showId){
+  public List<ReservationResponse> getAllShowReservations(String username, int showId){
+    if(!showRepository.existsByUserUsernameAndId()){
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"You do not own a cinema with such Id");
+    }
     List<Reservation> showReservations = reservationRepository.findAllByShowId(showId);
     List<ReservationResponse> reservationResponses = showReservations.stream().map(r -> new ReservationResponse(r)).toList();
     return reservationResponses;
   }
 
-  public ReservationResponse addReservation(ReservationRequest rr){
+  public ReservationResponse addReservation(String username, ReservationRequest rr){
+    if(!rr.getUsername().equalsIgnoreCase(username)){
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Username does not match with reservation");
+    }
     if(reservationRepository.existsByUserUsernameAndShowId(rr.getUsername(),rr.getShowId())){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"You already have a reservation for this showing");
     }
@@ -71,7 +77,10 @@ public class ReservationService {
     return new ReservationResponse(updatedReservation);
   }
 
-  public void deleteReservation(int id){
+  public void deleteReservation(String username, int id){
+    if(!reservationRepository.existsByUserUsernameAndId(username, id)){
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Username does not match with reservation-id");
+    }
     if(!reservationRepository.existsById(id)){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"No reservation with such id exists");
     }

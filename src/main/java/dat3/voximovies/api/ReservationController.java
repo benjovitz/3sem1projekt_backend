@@ -5,6 +5,7 @@ import dat3.voximovies.dto.ReservationResponse;
 import dat3.voximovies.service.ReservationService;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ public class ReservationController {
     this.reservationService=reservationService;
   }
 
-  //Admin
+  //ADMIN
   @GetMapping("/{id}")
   public ReservationResponse getReservation(@PathVariable int id){
     return reservationService.getReservation(id);
@@ -26,21 +27,21 @@ public class ReservationController {
 
 
   //User
-  @GetMapping("/{username}")
-  public List<ReservationResponse> getAllUserReservations(@PathVariable String username){
-    return reservationService.getAllUserReservations(username);
+  @GetMapping
+  public List<ReservationResponse> getAllUserReservations(Principal p){
+    return reservationService.getAllUserReservations(p.getName());
   }
 
 
   //Cinema-Owner
-  @GetMapping("/owner/{showid}")
-  public List<ReservationResponse> getAllShowReservations(@PathVariable int showid){
-    return reservationService.getAllShowReservations(showid);
+  @GetMapping("/owner/{showId}")
+  public List<ReservationResponse> getAllShowReservations(Principal p, @PathVariable int showId){
+    return reservationService.getAllShowReservations(p.getName(),showId);
   }
 
   @PostMapping
-  public ReservationResponse addReservation(@RequestBody ReservationRequest body){
-    return reservationService.addReservation(body);
+  public ReservationResponse addReservation(Principal p, @RequestBody ReservationRequest body){
+    return reservationService.addReservation(p.getName(), body);
   }
 
   @PutMapping
@@ -49,8 +50,8 @@ public class ReservationController {
   }
 
   @DeleteMapping("/{id}")
-  public void deleteReservation(@PathVariable int id){
-    reservationService.deleteReservation(id);
+  public void deleteReservation(Principal p, @PathVariable int id){
+    reservationService.deleteReservation(p.getName(),id);
   }
 
 
