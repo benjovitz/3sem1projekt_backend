@@ -3,7 +3,9 @@ package dat3.voximovies.configuration;
 import dat3.security.entity.Role;
 import dat3.security.entity.UserWithRoles;
 import dat3.voximovies.entity.Cinema;
+import dat3.voximovies.entity.Review;
 import dat3.voximovies.repository.CinemaRepository;
+import dat3.voximovies.repository.ReviewRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
@@ -20,11 +22,13 @@ public class SetupDevUsers implements ApplicationRunner {
     UserWithRolesRepository userWithRolesRepository;
     CinemaRepository cinemaRepository;
     String passwordUsedByAll;
+    ReviewRepository reviewRepository;
 
-    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, CinemaRepository cinemaRepository) {
+    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, CinemaRepository cinemaRepository, ReviewRepository reviewRepository) {
         this.userWithRolesRepository = userWithRolesRepository;
         passwordUsedByAll = "test12";
         this.cinemaRepository=cinemaRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     @Override
@@ -45,10 +49,13 @@ public class SetupDevUsers implements ApplicationRunner {
        seats.add("a3");
        c1.setSeats(seats);
        c2.setSeats(seats);
+        Review review = new Review("User1",6.0,"Virkelig lort",c1);
+        c1.addReservation(review);
         cinemaRepository.save(c1);
         cinemaRepository.save(c2);
         cinemaRepository.save(c3);
         cinemaRepository.save(c4);
+        reviewRepository.save(review);
     }
 
     /*****************************************************************************************

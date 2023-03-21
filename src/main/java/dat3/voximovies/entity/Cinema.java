@@ -5,10 +5,7 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Getter
 @Setter
@@ -27,6 +24,16 @@ public class Cinema {
     private String name;
     private String description;
     //list of reviews
+    @OneToMany(mappedBy = "cinema",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    Set<Review> reviews = new HashSet<>();
+
+    public void addReservation(Review r){
+        if(reviews ==null){
+            reviews =new HashSet<>();
+        }
+        reviews.add(r);
+        r.setCinema(this);
+    }
     //list of shows
     //list of seats
     @ElementCollection
