@@ -3,9 +3,11 @@ package dat3.voximovies.service;
 import dat3.voximovies.dto.ReservationRequest;
 import dat3.voximovies.dto.ReservationResponse;
 import dat3.voximovies.entity.Reservation;
-import dat3.voximovies.entity.Show;
+import dat3.voximovies.entity.Showing;
 import dat3.voximovies.entity.User;
 import dat3.voximovies.repository.ReservationRepository;
+import dat3.voximovies.repository.ShowingRepository;
+import dat3.voximovies.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,13 +19,13 @@ import java.util.List;
 public class ReservationService {
 
   private ReservationRepository reservationRepository;
-  //private UserRepository userRepository;
-  //private ShowRepository showRepository;
+  private UserRepository userRepository;
+  private ShowingRepository showingRepository;
 
-  public ReservationService(ReservationRepository reservationRepository){
+  public ReservationService(ReservationRepository reservationRepository, UserRepository userRepository, ShowingRepository showingRepository){
     this.reservationRepository=reservationRepository;
-    //this.userRepository=userRepository;
-    //this.showRepository=showRepository;
+    this.userRepository=userRepository;
+    this.showingRepository = showingRepository;
   }
 
 
@@ -39,37 +41,43 @@ public class ReservationService {
   }
 
   public List<ReservationResponse> getAllShowReservations(String username, int showId){
-    if(!showRepository.existsByUserUsernameAndId()){
+    /*
+
+    User user = userRepository.findByUsername(username)
+    if(!showRepository.existsByShowIdAndCinemaUser(showId, user))
+    */
+    if(!showingRepository.existsById(showId)){ //Skal erstattes med overstående nå Cinema er implementeret
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"You do not own a cinema with such Id");
     }
-    List<Reservation> showReservations = reservationRepository.findAllByShowId(showId);
+    List<Reservation> showReservations = reservationRepository.findAllByShowingId(showId);
     List<ReservationResponse> reservationResponses = showReservations.stream().map(r -> new ReservationResponse(r)).toList();
     return reservationResponses;
   }
 
   public ReservationResponse addReservation(String username, ReservationRequest rr){
-    if(!rr.getUsername().equalsIgnoreCase(username)){
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Username does not match with reservation");
+    if(!userRepository.existsById(username)){
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"User not registered as class user");
     }
-    if(reservationRepository.existsByUserUsernameAndShowId(rr.getUsername(),rr.getShowId())){
+    if(reservationRepository.existsByUserUsernameAndShowingId(username, rr.getShowingId())){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"You already have a reservation for this showing");
     }
-    if(reservationRepository.existsBySeatsContains(rr.getSeats())){
+    if(!areSeatsAvailable((ArrayList<String>) rr.getSeats(),rr.getShowingId())){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Contains seats that are already reserved");
     }
-    User user = userRepository.findByUsername(rr.getUsername());
-    Show show = showRepository.findById(rr.getShowId());
-    Reservation newReservation = rr.getReservationEntity(rr,user, show);
+    User user = userRepository.findByUsername(username);
+    Showing showing = showingRepository.findShowingById(rr.getShowingId());
+    Reservation newReservation = ReservationRequest.getReservationEntity(rr,user, showing);
     reservationRepository.save(newReservation);
 
     return  new ReservationResponse(newReservation);
   }
 
-  public ReservationResponse updateReservation(ReservationRequest rr){
-    Reservation updatedReservation = reservationRepository.findByUserUsernameAndShowId(rr.getUsername(),rr.getShowId());
+  public ReservationResponse updateReservation(String username, ReservationRequest rr){
+    Reservation updatedReservation = reservationRepository.findByUserUsernameAndShowingId(username,rr.getShowingId());
+    System.out.println(updatedReservation);
     ArrayList<String> oldSeats = new ArrayList<>(updatedReservation.getSeats());
     ArrayList<String> newSeats = new ArrayList<>(rr.getSeats().stream().filter(r -> oldSeats.contains(r)).toList());
-    if(reservationRepository.existsBySeatsContains(newSeats)){
+    if(!areSeatsAvailable(newSeats,rr.getShowingId())){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Contains seats that are already reserved");
     }
     updatedReservation.setSeats(rr.getSeats());
@@ -85,6 +93,18 @@ public class ReservationService {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"No reservation with such id exists");
     }
     reservationRepository.deleteById(id);
+  }
+
+  public boolean areSeatsAvailable(ArrayList<String> seats, int showingId){
+    List<Reservation> showingReservations = reservationRepository.findAllByShowingId(showingId);
+      for(Reservation res : showingReservations){
+        for(String seat : seats){
+          if(res.getSeats().contains(seat)){
+            return false;
+          }
+        }
+      }
+      return true;
   }
 
 

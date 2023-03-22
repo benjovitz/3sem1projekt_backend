@@ -16,24 +16,24 @@ public class Reservation {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "res_id", length = 50, nullable = false)
+  @Column(name = "res_id", nullable = false)
   private int id;
 
-  @Column(name = "res_user", length = 50, nullable = false)
+
   @ManyToOne
   private User user;
 
-  @Column(name = "res_show", length = 50, nullable = false)
+
   @ManyToOne
-  private Show show;
+  private Showing showing;
 
   @Column(name = "res_seats", length = 50, nullable = false)
   @ElementCollection
   private List<String> seats = new ArrayList<>();
 
-  public Reservation(User user, Show show, List<String> seats) {
+  public Reservation(User user, Showing showing, List<String> seats) {
     this.user = user;
-    this.show = show;
+    this.showing = showing;
     this.seats = seats;
   }
 }

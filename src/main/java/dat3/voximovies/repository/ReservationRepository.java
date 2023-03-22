@@ -12,14 +12,11 @@ public interface ReservationRepository extends JpaRepository<Reservation,Integer
   Reservation findReservationById(int id);
   ArrayList<Reservation> findAllByUserUsername(String username);
 
-  ArrayList<Reservation> findAllByShowId(int showId);
+  ArrayList<Reservation> findAllByShowingId(int showId);
 
-  Reservation findByUserUsernameAndShowId(String username, int showId);
+  Reservation findByUserUsernameAndShowingId(String username, int showId);
 
-  //test
-  boolean existsBySeatsContains(List<String> seats);
-
-  boolean existsByUserUsernameAndShowId(String username, int showId);
+  boolean existsByUserUsernameAndShowingId(String username, int showId);
 
   boolean existsByUserUsernameAndId(String username, int id);
 }

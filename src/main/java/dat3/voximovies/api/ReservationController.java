@@ -9,7 +9,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/reservations")
+@RequestMapping("/api/reservations/")
 @CrossOrigin
 public class ReservationController {
 
@@ -20,7 +20,7 @@ public class ReservationController {
   }
 
   //ADMIN
-  @GetMapping("/{id}")
+  @GetMapping("{id}")
   public ReservationResponse getReservation(@PathVariable int id){
     return reservationService.getReservation(id);
   }
@@ -34,9 +34,9 @@ public class ReservationController {
 
 
   //Cinema-Owner
-  @GetMapping("/owner/{showId}")
-  public List<ReservationResponse> getAllShowReservations(Principal p, @PathVariable int showId){
-    return reservationService.getAllShowReservations(p.getName(),showId);
+  @GetMapping("owner/{showingId}") //Untested
+  public List<ReservationResponse> getAllShowReservations(Principal p, @PathVariable int showingId){
+    return reservationService.getAllShowReservations(p.getName(),showingId);
   }
 
   @PostMapping
@@ -45,11 +45,11 @@ public class ReservationController {
   }
 
   @PutMapping
-  public ReservationResponse updateReservation(@RequestBody ReservationRequest body){
-    return reservationService.updateReservation(body);
+  public ReservationResponse updateReservation(Principal p, @RequestBody ReservationRequest body){
+    return reservationService.updateReservation(p.getName(), body);
   }
 
-  @DeleteMapping("/{id}")
+  @DeleteMapping("{id}")
   public void deleteReservation(Principal p, @PathVariable int id){
     reservationService.deleteReservation(p.getName(),id);
   }

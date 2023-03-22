@@ -1,7 +1,7 @@
 package dat3.voximovies.dto;
 
 import dat3.voximovies.entity.Reservation;
-import dat3.voximovies.entity.Show;
+import dat3.voximovies.entity.Showing;
 import dat3.voximovies.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,19 +15,17 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class ReservationRequest {
-  private String username;
 
-  private Integer showId;
+  private Integer showingId;
 
   private List<String> seats = new ArrayList<>();
 
-  public static Reservation getReservationEntity(ReservationRequest rr, User u, Show s){
+  public static Reservation getReservationEntity(ReservationRequest rr, User u, Showing s){
     return new Reservation(u ,s , rr.getSeats());
   }
 
-  public ReservationRequest(String username, Integer showId, List<String> seats) {
-    this.username = username;
-    this.showId = showId;
+  public ReservationRequest(Integer showingId, List<String> seats) {
+    this.showingId = showingId;
     this.seats = seats;
   }
 }
