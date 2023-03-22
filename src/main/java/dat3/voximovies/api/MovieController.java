@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/movies")
+@RequestMapping("api/movies/")
 public class MovieController {
 
     MovieService movieService;
@@ -23,12 +23,12 @@ public class MovieController {
     }
 
     @GetMapping
-    List<MovieResponse> getCars(){
+    List<MovieResponse> getMovies(){
         return movieService.getMovies(true);
     }
 
 
-    @GetMapping(path="/{id}")
+    @GetMapping("/{id}")
     MovieResponse getMovieById(@PathVariable int id) throws Exception {
         return movieService.findMovieById(id);
     }
