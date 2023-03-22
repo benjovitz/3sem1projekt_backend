@@ -36,7 +36,7 @@ public class SetupDevUsers implements ApplicationRunner {
     ReviewRepository reviewRepository;
 
 
-    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, CinemaRepository cinemaRepository, ReviewRepository reviewRepository) {
+    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, CinemaRepository cinemaRepository, ReviewRepository reviewRepository, MovieRepository movieRepository) {
         this.userWithRolesRepository = userWithRolesRepository;
         this.movieRepository = movieRepository;
         passwordUsedByAll = "test12";
