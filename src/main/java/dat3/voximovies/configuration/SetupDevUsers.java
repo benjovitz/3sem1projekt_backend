@@ -2,6 +2,9 @@ package dat3.voximovies.configuration;
 
 import dat3.security.entity.Role;
 import dat3.security.entity.UserWithRoles;
+import dat3.voximovies.entity.Movie;
+import dat3.voximovies.repository.MovieRepository;
+
 
 import dat3.voximovies.entity.Cinema;
 import dat3.voximovies.entity.Review;
@@ -26,13 +29,16 @@ import java.util.Map;
 @Controller
 public class SetupDevUsers implements ApplicationRunner {
 
+    MovieRepository movieRepository;
     UserWithRolesRepository userWithRolesRepository;
     CinemaRepository cinemaRepository;
     String passwordUsedByAll;
     ReviewRepository reviewRepository;
 
+
     public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, CinemaRepository cinemaRepository, ReviewRepository reviewRepository) {
         this.userWithRolesRepository = userWithRolesRepository;
+        this.movieRepository = movieRepository;
         passwordUsedByAll = "test12";
         this.cinemaRepository=cinemaRepository;
         this.reviewRepository = reviewRepository;
@@ -68,14 +74,30 @@ public class SetupDevUsers implements ApplicationRunner {
         user1.addRole(Role.ADMIN);
         user2.addRole(Role.USER);
         user3.addRole(Role.ADMIN);
-      userWithRolesRepository.save(user1);
-      userWithRolesRepository.save(user2);
-      userWithRolesRepository.save(user3);
 
-        Review review2 = new Review(user3, 5.0, "Super sød type", user1);
+        userWithRolesRepository.save(user1);
+        userWithRolesRepository.save(user2);
+        userWithRolesRepository.save(user3);
+
+      Review review2 = new Review(user3, 5.0, "Super sød type", user1);
       reviewRepository.save(review2);
       Review review1 = new Review(user2, 1.0, "Meget lille skærm", c1);
       reviewRepository.save(review1);
+
+
+
+      Movie movie1 = new Movie("Up", 1.20, "feel good family movie", "family");
+        Movie movie2 = new Movie("Zoro", 1.45, "action and romance packed", "spanish western");
+        Movie movie3 = new Movie("saw", 1.38, "gorry horrific and bloody", "horror");
+
+        movieRepository.save(movie1);
+        movieRepository.save(movie2);
+        movieRepository.save(movie3);
+
+
+
+
+
 
     }
 }
