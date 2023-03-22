@@ -50,7 +50,7 @@ public class SetupDevUsers implements ApplicationRunner {
        c1.setSeats(seats);
        c2.setSeats(seats);
         Review review = new Review("User1",2.0,"Virkelig lort",c1);
-        c1.addReservation(review);
+        c1.addReview(review);
         cinemaRepository.save(c1);
         cinemaRepository.save(c2);
         cinemaRepository.save(c3);

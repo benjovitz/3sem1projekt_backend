@@ -10,19 +10,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReviewRequest {
 
    String user;
    //User user;
-   Double score;
+   Double rating;
    String comment;
    //User reviewedUser;
     Cinema cinema;
 
     public static Review getReviewEntity(ReviewRequest request){
         if(request.getCinema()!=null){
-        return new Review(request.getUser(),request.getScore(),request.getComment(),request.getCinema());
+        return new Review(request.getUser(),request.getRating(),request.getComment(),request.getCinema());
         } else /*if(request.getReviewedUser!=null)*/{
             //return new Review(request.getUser(),request.getScore(),request.getComment(),request.getReviewedUser())
         }
