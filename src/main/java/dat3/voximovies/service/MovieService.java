@@ -6,6 +6,7 @@ import dat3.voximovies.dto.MovieResponse;
 import dat3.voximovies.entity.Movie;
 import dat3.voximovies.repository.MovieRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -22,7 +23,7 @@ public class MovieService {
 
     }
 
-    public List<MovieResponse> getMovies(boolean includeAll) {
+    public List<MovieResponse> getMovies() {
 
         List<Movie> movies = movieRepository.findAll();
         List<MovieResponse>movieResponses = movies.stream().map(movie->new MovieResponse(movie)).toList();
@@ -33,9 +34,7 @@ public class MovieService {
 
     public Movie findMovie(int id){
 
-        movieRepository.findById(String.valueOf(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Movie with this ID doesnt exist"));
-        Optional<Movie> m = movieRepository.findById(String.valueOf(id));
-        Movie movie = m.orElse(null);
+        Movie movie = movieRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Movie with this ID doesnt exist"));
 
         return movie;
     }
@@ -59,13 +58,15 @@ public class MovieService {
     }
 
 
-    public void editMovie(MovieRequest body, int id) {
+    public ResponseEntity<Boolean> editMovie(MovieRequest body, int id) {
 
         Movie movieToEdit =  findMovie(id);
         Optional.ofNullable(body.getName()).ifPresent(movieToEdit::setName);
         Optional.ofNullable(body.getDescripion()).ifPresent(movieToEdit::setDescripion);
         Optional.ofNullable(body.getGenre()).ifPresent(movieToEdit::setGenre);
         movieRepository.save(movieToEdit);
+
+        return new ResponseEntity(true, HttpStatus.OK);
     }
 
 
