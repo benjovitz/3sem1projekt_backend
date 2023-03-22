@@ -6,7 +6,9 @@ import dat3.voximovies.entity.Cinema;
 import dat3.voximovies.entity.Review;
 import dat3.voximovies.repository.CinemaRepository;
 import dat3.voximovies.repository.ReviewRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -23,8 +25,10 @@ public class ReviewService {
         this.cinemaRepository = cinemaRepository;
     }
 
-    public ReviewResponse createReview(ReviewRequest request) {
+    public ReviewResponse createReview(ReviewRequest request, Long id) {
         Review review = ReviewRequest.getReviewEntity(request);
+        Cinema cinema = cinemaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Cinema with this ID doesnt exist"));
+        request.setCinema(cinema);
         //her skal der noget der laver noget rating halløj
         reviewRepository.save(review);
         if(review.getCinema()!=null){

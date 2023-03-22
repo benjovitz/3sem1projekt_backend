@@ -31,12 +31,9 @@ public class ReviewController {
     ReviewResponse createReviewForUser(@RequestBody ReviewRequest request,@PathVariable String username){
         return reviewService.createReview(request);
     }
-
      */
     @PostMapping("cinema/{cinemaID}")
     ReviewResponse createReviewForCinema(@RequestBody ReviewRequest request,@PathVariable String cinemaID){
-        Cinema cinema = cinemaService.findCinemaByID(Long.valueOf(cinemaID));
-        request.setCinema(cinema);
-        return reviewService.createReview(request);
+        return reviewService.createReview(request, Long.valueOf(cinemaID));
     }
 }
