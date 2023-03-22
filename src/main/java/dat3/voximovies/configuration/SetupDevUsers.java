@@ -2,12 +2,16 @@ package dat3.voximovies.configuration;
 
 import dat3.security.entity.Role;
 import dat3.security.entity.UserWithRoles;
+import dat3.voximovies.entity.Movie;
+import dat3.voximovies.repository.MovieRepository;
+
 
 import dat3.voximovies.entity.Cinema;
 import dat3.voximovies.entity.Review;
 import dat3.voximovies.repository.CinemaRepository;
 
 import dat3.voximovies.entity.User;
+
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -25,13 +29,16 @@ import java.util.Map;
 @Controller
 public class SetupDevUsers implements ApplicationRunner {
 
+    MovieRepository movieRepository;
     UserWithRolesRepository userWithRolesRepository;
     CinemaRepository cinemaRepository;
     String passwordUsedByAll;
     ReviewRepository reviewRepository;
 
+
     public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, CinemaRepository cinemaRepository, ReviewRepository reviewRepository) {
         this.userWithRolesRepository = userWithRolesRepository;
+        this.movieRepository = movieRepository;
         passwordUsedByAll = "test12";
         this.cinemaRepository=cinemaRepository;
         this.reviewRepository = reviewRepository;
@@ -81,5 +88,23 @@ public class SetupDevUsers implements ApplicationRunner {
         userWithRolesRepository.save(user1);
         userWithRolesRepository.save(user2);
         userWithRolesRepository.save(user3);
+        userWithRolesRepository.save(user4);
+
+        Movie movie1 = new Movie("Up", 1.20, "feel good family movie", "family");
+        Movie movie2 = new Movie("Zoro", 1.45, "action and romance packed", "spanish western");
+        Movie movie3 = new Movie("saw", 1.38, "gorry horrific and bloody", "horror");
+
+        movieRepository.save(movie1);
+        movieRepository.save(movie2);
+        movieRepository.save(movie3);
+
+
+
+
+
+
     }
+
+
+
 }

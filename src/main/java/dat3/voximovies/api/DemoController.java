@@ -1,4 +1,4 @@
-package dat3.jwtdemo.api;
+package dat3.voximovies.api;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ class InfoResponse {
         this.info = info;
     }
 }
-
+//hej
 @RestController
 @RequestMapping("/api/demo")
 @CrossOrigin
