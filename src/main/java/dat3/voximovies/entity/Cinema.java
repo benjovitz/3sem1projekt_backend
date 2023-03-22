@@ -27,7 +27,7 @@ public class Cinema {
     @OneToMany(mappedBy = "cinema",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     Set<Review> reviews = new HashSet<>();
 
-    public void addReservation(Review r){
+    public void addReview(Review r){
         if(reviews ==null){
             reviews =new HashSet<>();
         }
