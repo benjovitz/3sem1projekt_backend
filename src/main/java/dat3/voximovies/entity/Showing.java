@@ -20,9 +20,11 @@ public class Showing {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   int id;
 
-  //Movie movie
+  @ManyToOne
+  Movie movie;
 
-  //Cinema cinema
+  @ManyToOne
+  Cinema cinema;
 
   double runtimeInMinutes;
 
