@@ -37,7 +37,6 @@ public class User extends UserWithRoles {
   @UpdateTimestamp
   private LocalDateTime lastEdited;
 
-  /*
   @OneToMany(mappedBy = "user")
   List<Review> reviews = new ArrayList<>();
 
@@ -58,7 +57,7 @@ public class User extends UserWithRoles {
     userReviews.add(userReview);
   }
 
-   */
+
 
   private double ranking;
 

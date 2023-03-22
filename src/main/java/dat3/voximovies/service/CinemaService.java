@@ -35,21 +35,7 @@ public class CinemaService {
         Cinema cinema = findCinemaByID(id);
         return new CinemaResponse(cinema);
     }
-    /*
-    public ResponseEntity<Boolean> addRating(Long id, Double rating) {
-        Cinema cinema = findCinemaByID(id);
-        int ratingCounter = cinema.getNumberOfRatings();
-        double currentRating = cinema.getRating();
-        double newRating = currentRating*ratingCounter;
-        newRating = newRating+rating;
-        ratingCounter = ratingCounter+1;
-        newRating=newRating/ratingCounter;
-        cinema.setRating(newRating);
-        cinema.setNumberOfRatings(ratingCounter);
-        cinemaRepository.save(cinema);
-        return null;
-    }
-    */
+
     public CinemaResponse addCinema(CinemaRequest request) {
         Cinema cinema = CinemaRequest.getCinemaEntity(request);
         cinemaRepository.save(cinema);

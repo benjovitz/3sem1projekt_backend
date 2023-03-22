@@ -9,6 +9,7 @@ import dat3.voximovies.repository.CinemaRepository;
 
 import dat3.voximovies.entity.User;
 
+import dat3.voximovies.repository.ReviewRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
@@ -39,7 +40,6 @@ public class SetupDevUsers implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        setupUserWithRoleUsers();
         setupCinemas();
     }
 
@@ -55,20 +55,11 @@ public class SetupDevUsers implements ApplicationRunner {
        seats.add("a3");
        c1.setSeats(seats);
        c2.setSeats(seats);
-        Review review = new Review("User1",2.0,"Virkelig lort",c1);
-        c1.addReview(review);
         cinemaRepository.save(c1);
         cinemaRepository.save(c2);
         cinemaRepository.save(c3);
         cinemaRepository.save(c4);
-        reviewRepository.save(review);
-    }
 
-    /*****************************************************************************************
-     NEVER  COMMIT/PUSH CODE WITH DEFAULT CREDENTIALS FOR REAL
-     iT'S ONE OF THE TOP SECURITY FLAWS YOU CAN DO
-     *****************************************************************************************/
-    private void setupUserWithRoleUsers() {
         User user1 = new User("Lasse", passwordUsedByAll, "u,mbjsak", "Lasse Dall", "1234", "Højgade 61", "København S", "2300");
         User user2 = new User("Jørgen", passwordUsedByAll, "uajknhk", "Jørgen Jørgensen", "56789098", "Bredgade 3, 2.th", "København K", "2100");
         User user3 = new User("Mathilde", passwordUsedByAll, "jhwdk", "Mathilde Rask", "67676767", "Dovregade 27, 1.tv", "København S", "2300");
@@ -77,9 +68,14 @@ public class SetupDevUsers implements ApplicationRunner {
         user1.addRole(Role.ADMIN);
         user2.addRole(Role.USER);
         user3.addRole(Role.ADMIN);
+      userWithRolesRepository.save(user1);
+      userWithRolesRepository.save(user2);
+      userWithRolesRepository.save(user3);
 
-        userWithRolesRepository.save(user1);
-        userWithRolesRepository.save(user2);
-        userWithRolesRepository.save(user3);
+        Review review2 = new Review(user3, 5.0, "Super sød type", user1);
+      reviewRepository.save(review2);
+      Review review1 = new Review(user2, 1.0, "Meget lille skærm", c1);
+      reviewRepository.save(review1);
+
     }
 }
