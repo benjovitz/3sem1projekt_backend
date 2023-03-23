@@ -26,19 +26,19 @@ public class Showing {
   @ManyToOne
   Cinema cinema;
 
-  double runtimeInMinutes;
+  double time;
 
   @OneToMany(mappedBy = "showing")
   List<Reservation> reservations = new ArrayList<>();
 
   double price;
 
-  LocalDateTime date;
+  LocalDateTime dateTime;
 
-  public Showing(double runtimeInMinutes, List<Reservation> reservations, double price, LocalDateTime date) {
-    this.runtimeInMinutes = runtimeInMinutes;
-    //this.reservations = reservations;
+  public Showing(Movie movie, Cinema cinema, double price, LocalDateTime date) {
+    this.movie = movie;
+    this.cinema=cinema;
     this.price = price;
-    this.date = date;
+    this.dateTime = date;
   }
 }
