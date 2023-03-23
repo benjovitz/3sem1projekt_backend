@@ -1,5 +1,6 @@
 package dat3.voximovies.configuration;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import dat3.security.entity.Role;
 import dat3.security.entity.UserWithRoles;
 import dat3.voximovies.repository.ShowingRepository;
@@ -15,6 +16,7 @@ import dat3.voximovies.entity.User;
 
 import dat3.voximovies.repository.ReviewRepository;
 
+import dat3.voximovies.service.ChatService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
@@ -39,19 +41,23 @@ public class SetupDevUsers implements ApplicationRunner {
     CinemaRepository cinemaRepository;
     String passwordUsedByAll;
     ReviewRepository reviewRepository;
+    ChatService chatService;
 
 
-    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, CinemaRepository cinemaRepository, ReviewRepository reviewRepository, MovieRepository movieRepository) {
+    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, CinemaRepository cinemaRepository, ReviewRepository reviewRepository, MovieRepository movieRepository, ChatService chatService) {
         this.userWithRolesRepository = userWithRolesRepository;
         this.movieRepository = movieRepository;
         passwordUsedByAll = "test12";
         this.cinemaRepository=cinemaRepository;
         this.reviewRepository = reviewRepository;
+        this.chatService = chatService;
     }
 
     @Override
-    public void run(ApplicationArguments args) {
-        setupCinemas();
+    public void run(ApplicationArguments args) throws JsonProcessingException {
+        //setupCinemas();
+        String str = "og efter det?";
+        System.out.println(chatService.chatAnswer(str));
     }
 
     private void setupCinemas() {
