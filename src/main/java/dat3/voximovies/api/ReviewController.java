@@ -26,14 +26,14 @@ public class ReviewController {
     List<ReviewResponse> getAllReviews(){
       return reviewService.getAllReviews();
     }
-    /*
+
     @PostMapping("user/{username}")
     ReviewResponse createReviewForUser(@RequestBody ReviewRequest request,@PathVariable String username){
-        return reviewService.createReview(request);
+        return reviewService.createUserReview(request, username);
     }
-     */
+
     @PostMapping("cinema/{cinemaID}")
     ReviewResponse createReviewForCinema(@RequestBody ReviewRequest request,@PathVariable String cinemaID){
-        return reviewService.createReview(request, Long.valueOf(cinemaID));
+        return reviewService.createCinemaReview(request, Long.valueOf(cinemaID));
     }
 }
