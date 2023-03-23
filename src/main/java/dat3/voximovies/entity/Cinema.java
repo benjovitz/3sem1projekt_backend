@@ -24,7 +24,7 @@ public class Cinema {
     private String name;
     private String description;
     //list of reviews
-    @OneToMany(mappedBy = "cinema",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "reviewedCinema",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     Set<Review> reviews = new HashSet<>();
 
     public void addReview(Review r){
@@ -32,7 +32,7 @@ public class Cinema {
             reviews =new HashSet<>();
         }
         reviews.add(r);
-        r.setCinema(this);
+        r.setReviewedCinema(this);
     }
     //list of shows
     //list of seats
@@ -45,9 +45,8 @@ public class Cinema {
     private String city;
     @Nonnull
     private String zip;
-    @Nonnull
-    private String user; //temp
+    @ManyToOne
+    private User owner;
     private double rating;
     private int numberOfRatings;
-    //private User contactPerson;
 }

@@ -2,6 +2,7 @@ package dat3.voximovies.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import dat3.voximovies.entity.Cinema;
+import dat3.voximovies.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,13 +19,13 @@ public class CinemaRequest {
     private String street;
     private String city;
     private String zip;
-    private String user; //temp
+    private User owner; //temp
     private double rating;
     private int numberOfRatings;
     //private User contactPerson;
 
     public static Cinema getCinemaEntity(CinemaRequest c){
-        Cinema cinema =  Cinema.builder().description(c.getDescription()).street(c.getStreet()).city(c.getCity()).zip(c.getZip()).user(c.getUser()).build();
+        Cinema cinema =  Cinema.builder().description(c.getDescription()).street(c.getStreet()).city(c.getCity()).zip(c.getZip()).owner(c.getOwner()).build();
         return cinema;
     }
 }

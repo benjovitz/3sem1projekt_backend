@@ -15,30 +15,46 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    @Nonnull
-    String user;
-    Double score;
-    String comment;
-
-    //@ManyToOne
-    //User reviewedUser
+    private Long id;
+    @ManyToOne
+    private User user;
 
     @ManyToOne
-    Cinema cinema;
+    private User reviewedUser;
+    private Double score;
+    private String comment;
 
-    public Review(String user, Double score, String comment, Cinema cinemaReview) {
-        this.user = user;
+    private String username;
+
+    @ManyToOne
+    private Cinema reviewedCinema;
+
+    public Review(String username, Double score, String comment, Cinema reviewedCinema) {
+        this.username = username;
         this.score = score;
         this.comment = comment;
-        this.cinema = cinemaReview;
+        this.reviewedCinema = reviewedCinema;
     }
-    /*
-    public Review(String user, Double score, String comment,User reviewedUser) {
+
+    public Review(String username, Double score, String comment, User reviewedUser) {
+        this.username = username;
+        this.score = score;
+        this.comment = comment;
+        this.reviewedUser = reviewedUser;
+    }
+
+    public Review(User user, Double score, String comment, User reviewedUser) {
         this.user = user;
         this.score = score;
         this.comment = comment;
         this.reviewedUser = reviewedUser;
     }
-     */
+
+    public Review(User user, Double score, String comment, Cinema reviewedCinema) {
+        this.user = user;
+        this.score = score;
+        this.comment = comment;
+        this.reviewedCinema = reviewedCinema;
+    }
+
 }

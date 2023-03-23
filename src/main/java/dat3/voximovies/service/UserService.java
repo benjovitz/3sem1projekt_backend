@@ -67,22 +67,4 @@ public class UserService {
     userRepository.save(updatedUser);
     return new ResponseEntity<Boolean>(true,HttpStatus.OK);
   }
-
-  /*
-  public void updateRanking(String username, int rankValue) {
-    User user = userRepository.findById(username).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
-
-    int numberOfReviews = user.getReviews().size();
-    if (numberOfReviews > 1) {
-      double newRanking = (user.getRanking() * (numberOfReviews - 1) + rankValue) / numberOfReviews;
-      user.setRanking(newRanking);
-    } else {
-      user.setRanking(rankValue);
-    }
-    userRepository.save(user);
-  }
-  */
-
-
-
 }

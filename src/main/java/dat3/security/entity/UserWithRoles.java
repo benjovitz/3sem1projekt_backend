@@ -47,7 +47,7 @@ public class UserWithRoles implements UserDetails {
     private boolean enabled= true;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('USER','ADMIN')")
+    @Column(columnDefinition = "ENUM('USER','ADMIN','CINEMATICER')")
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "security_role")
     List<Role> roles = new ArrayList<>();
