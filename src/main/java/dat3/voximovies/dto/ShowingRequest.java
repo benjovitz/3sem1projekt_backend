@@ -16,17 +16,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ShowingRequest {
 
-  @Nonnull
-  int MovieId;
 
-  @Nonnull
-  int CinemaId;
-
-  @Nonnull
-  double price;
+  Integer MovieId;
 
 
-  @Nonnull
+  Integer CinemaId;
+
+
+  Double price;
+
+
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
   LocalDateTime dateTime;
 

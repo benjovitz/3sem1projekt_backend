@@ -1,6 +1,7 @@
 package dat3.voximovies.entity;
 
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,19 +21,22 @@ public class Showing {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   int id;
 
+  @Nonnull
   @ManyToOne
   Movie movie;
 
+  @Nonnull
   @ManyToOne
   Cinema cinema;
 
-  double time;
 
-  @OneToMany(mappedBy = "showing")
-  List<Reservation> reservations = new ArrayList<>();
+  //@OneToMany(mappedBy = "showing")
+  //List<Reservation> reservations = new ArrayList<>();
 
+  @Nonnull
   double price;
 
+  @Nonnull
   LocalDateTime dateTime;
 
   public Showing(Movie movie, Cinema cinema, double price, LocalDateTime date) {

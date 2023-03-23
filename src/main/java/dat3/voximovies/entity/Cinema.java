@@ -46,7 +46,9 @@ public class Cinema {
     @Nonnull
     private String zip;
     @Nonnull
-    private String user; //temp
+
+    @ManyToOne
+    private User user; //temp
     private double rating;
     private int numberOfRatings;
     //private User contactPerson;
