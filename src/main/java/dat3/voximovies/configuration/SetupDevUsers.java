@@ -50,21 +50,7 @@ public class SetupDevUsers implements ApplicationRunner {
     }
 
     private void setupCinemas() {
-        // Create some mock data for cinemas
-        Cinema c1 = Cinema.builder().user("Daniel").name("Daniels Bio").description("God hjemmebio").zip("2000").street("Aurikelvej 6 1 tv").city("Frederiksberg").build();
-        Cinema c2 = Cinema.builder().user("Anna").description("Cozy and comfortable").zip("2100").street("Østerbrogade 12 3 th").city("København Ø").build();
-        Cinema c3 = Cinema.builder().user("Lars").description("Modern and spacious").zip("2300").street("Amagerbrogade 45 2 mf").city("København S").build();
-        Cinema c4 = Cinema.builder().user("Maria").description("Small but charming").zip("2200").street("Nørrebrogade 33 4 tv").city("København N").build();
-       List<String> seats = new ArrayList<>();
-       seats.add("a1");
-       seats.add("a2");
-       seats.add("a3");
-       c1.setSeats(seats);
-       c2.setSeats(seats);
-        cinemaRepository.save(c1);
-        cinemaRepository.save(c2);
-        cinemaRepository.save(c3);
-        cinemaRepository.save(c4);
+
 
         User user1 = new User("Lasse", passwordUsedByAll, "u,mbjsak", "Lasse Dall", "1234", "Højgade 61", "København S", "2300");
         User user2 = new User("Jørgen", passwordUsedByAll, "uajknhk", "Jørgen Jørgensen", "56789098", "Bredgade 3, 2.th", "København K", "2100");
@@ -73,11 +59,27 @@ public class SetupDevUsers implements ApplicationRunner {
         user1.addRole(Role.USER);
         user1.addRole(Role.ADMIN);
         user2.addRole(Role.USER);
-        user3.addRole(Role.ADMIN);
+        user3.addRole(Role.CINEMATICER);
+      userWithRolesRepository.save(user1);
+      userWithRolesRepository.save(user2);
+      userWithRolesRepository.save(user3);
+      Cinema c1 = Cinema.builder().owner(user1).name("Daniels Bio").description("God hjemmebio").zip("2000").street("Aurikelvej 6 1 tv").city("Frederiksberg").build();
+      Cinema c2 = Cinema.builder().owner(user3).description("Cozy and comfortable").zip("2100").street("Østerbrogade 12 3 th").city("København Ø").build();
+      Cinema c3 = Cinema.builder().owner(user3).description("Modern and spacious").zip("2300").street("Amagerbrogade 45 2 mf").city("København S").build();
+      Cinema c4 = Cinema.builder().owner(user3).description("Small but charming").zip("2200").street("Nørrebrogade 33 4 tv").city("København N").build();
+      List<String> seats = new ArrayList<>();
+      seats.add("a1");
+      seats.add("a2");
+      seats.add("a3");
+      c1.setSeats(seats);
+      c2.setSeats(seats);
+      cinemaRepository.save(c1);
+      cinemaRepository.save(c2);
+      cinemaRepository.save(c3);
+      cinemaRepository.save(c4);
 
-        userWithRolesRepository.save(user1);
-        userWithRolesRepository.save(user2);
-        userWithRolesRepository.save(user3);
+
+
 
       Review review2 = new Review(user3, 5.0, "Super sød type", user1);
       reviewRepository.save(review2);

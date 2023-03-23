@@ -1,6 +1,7 @@
 package dat3.voximovies.entity;
 
 import dat3.security.entity.UserWithRoles;
+import dat3.voximovies.entity.Cinema;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,16 @@ public class User extends UserWithRoles {
   private String zip;
 
   private String picture;
+
+  @OneToMany(mappedBy = "owner")
+  private List<Cinema> cinemas;
+
+  public void addCinema(Cinema cinema) {
+    if (cinemas == null) {
+      cinemas = new ArrayList<>();
+    }
+    cinemas.add(cinema);
+  }
 
   @CreationTimestamp
   private LocalDateTime created;

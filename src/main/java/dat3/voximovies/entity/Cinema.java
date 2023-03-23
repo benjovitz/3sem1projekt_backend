@@ -45,9 +45,8 @@ public class Cinema {
     private String city;
     @Nonnull
     private String zip;
-    @Nonnull
-    private String user; //temp
+    @ManyToOne
+    private User owner;
     private double rating;
     private int numberOfRatings;
-    //private User contactPerson;
 }

@@ -55,7 +55,7 @@ public class CinemaService {
         Optional.ofNullable(request.getZip()).ifPresent(cinema::setZip);
         Optional.ofNullable(request.getStreet()).ifPresent(cinema::setStreet);
         Optional.ofNullable(request.getDescription()).ifPresent(cinema::setDescription);
-        Optional.ofNullable(request.getUser()).ifPresent(cinema::setUser);
+        Optional.ofNullable(request.getOwner()).ifPresent(cinema::setOwner);
         cinemaRepository.save(cinema);
         return new CinemaResponse(cinema);
     }
