@@ -2,6 +2,7 @@ package dat3.voximovies.configuration;
 
 import dat3.security.entity.Role;
 import dat3.security.entity.UserWithRoles;
+import dat3.voximovies.repository.ShowingRepository;
 import dat3.voximovies.entity.Movie;
 import dat3.voximovies.repository.MovieRepository;
 
@@ -13,16 +14,20 @@ import dat3.voximovies.repository.CinemaRepository;
 import dat3.voximovies.entity.User;
 
 import dat3.voximovies.repository.ReviewRepository;
+
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
 import dat3.security.repository.UserWithRolesRepository;
 
-import java.util.ArrayList;
 
+import java.time.LocalDateTime;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 
 
