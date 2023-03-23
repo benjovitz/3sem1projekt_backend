@@ -46,14 +46,8 @@ public class UserWithRoles implements UserDetails {
 
     private boolean enabled= true;
 
-    @CreationTimestamp
-    private LocalDateTime created;
-
-    @UpdateTimestamp
-    private LocalDateTime edited;
-
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('USER','ADMIN')")
+    @Column(columnDefinition = "ENUM('USER','ADMIN','CINEMATICER')")
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "security_role")
     List<Role> roles = new ArrayList<>();

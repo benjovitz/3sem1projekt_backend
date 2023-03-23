@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 
+//hej
+
 @RestController
 @RequestMapping("/api/auth/")
 @CrossOrigin
