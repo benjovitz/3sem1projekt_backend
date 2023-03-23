@@ -14,10 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReservationResponse {
-  private Integer id;
+  private Long id;
   private String username;
 
-  private Integer showingId;
+  private Long showingId;
 
   private List<String> seats = new ArrayList<>();
 

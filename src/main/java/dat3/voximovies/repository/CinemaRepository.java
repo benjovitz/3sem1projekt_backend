@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CinemaRepository extends JpaRepository<Cinema,Integer> {
+public interface CinemaRepository extends JpaRepository<Cinema,Long> {
 
-  boolean existsByIdAndUserUsername(int id, String username);
-  Cinema findCinemaById(int id);
+  boolean existsByIdAndOwnerUsername(long id, String username);
+  Cinema findCinemaById(long id);
 
 }

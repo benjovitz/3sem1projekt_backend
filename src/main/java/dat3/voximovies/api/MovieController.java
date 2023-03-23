@@ -29,7 +29,7 @@ public class MovieController {
 
 
     @GetMapping("/{id}")
-    MovieResponse getMovieById(@PathVariable int id) throws Exception {
+    MovieResponse getMovieById(@PathVariable long id) throws Exception {
         return movieService.findMovieById(id);
     }
 
@@ -41,14 +41,14 @@ public class MovieController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Boolean> editMovie(@PathVariable int id, @RequestBody MovieRequest body) {
+    public ResponseEntity<Boolean> editMovie(@PathVariable long id, @RequestBody MovieRequest body) {
         movieService.editMovie(body,id);
         return ResponseEntity.ok(true);
     }
 
 
     @DeleteMapping("/{id}")
-    void deleteMovieById(@PathVariable int id) {
+    void deleteMovieById(@PathVariable long id) {
         movieService.deleteMovieById(id);
     }
 

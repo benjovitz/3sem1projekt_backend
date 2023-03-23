@@ -22,7 +22,7 @@ public class ShowingController {
   }
   //All
   @GetMapping("{id}")
-  public ShowingResponse getShowById(@PathVariable int id){
+  public ShowingResponse getShowById(@PathVariable long id){
     return showingService.getShowingById(id);
   }
 
@@ -34,7 +34,7 @@ public class ShowingController {
 
   @PreAuthorize("hasAuthority('User') and ('CINEMATIZER')")
   @GetMapping("cinema/{cinemaId}")
-  public List<ShowingResponse> getAllCinemaShows(@PathVariable int cinemaId){
+  public List<ShowingResponse> getAllCinemaShows(@PathVariable long cinemaId){
     return showingService.getAllShowingsForCinema(cinemaId);
   }
 
@@ -52,7 +52,7 @@ public class ShowingController {
 
   @PreAuthorize("hasAuthority('CINEMATIZER')")
   @DeleteMapping("{showId}")
-  public void deleteShowing(Principal p, @PathVariable int showId){
+  public void deleteShowing(Principal p, @PathVariable long showId){
     showingService.deleteShowing(p.getName(),showId);
   }
 

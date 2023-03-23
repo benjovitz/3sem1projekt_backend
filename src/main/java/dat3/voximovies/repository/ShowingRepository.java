@@ -5,14 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.ArrayList;
 
-public interface ShowingRepository extends JpaRepository<Showing,Integer> {
+public interface ShowingRepository extends JpaRepository<Showing,Long> {
 
-  ArrayList<Showing> findAllByCinemaId(int id);
+  ArrayList<Showing> findAllByCinemaId(long id);
 
   ArrayList<Showing> findAllByMovieName(String movieName);
 
-  Showing findShowingById(int id);
+  Showing findShowingById(long id);
 
-  boolean existsByIdAndCinemaUserUsername(int id, String username);
+  boolean existsByIdAndCinemaOwnerUsername(long id, String username);
 
 }

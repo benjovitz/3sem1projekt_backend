@@ -17,10 +17,10 @@ import java.time.LocalDateTime;
 public class ShowingRequest {
 
 
-  Integer MovieId;
+  Long movieId;
 
 
-  Integer CinemaId;
+  Long cinemaId;
 
 
   Double price;
@@ -35,8 +35,8 @@ public class ShowingRequest {
   }
 
   public ShowingRequest(Showing s) {
-    MovieId = s.getMovie().getId();
-    CinemaId = s.getCinema().getId();
+    this.movieId = s.getMovie().getId();
+    this.cinemaId = s.getCinema().getId();
     this.price = s.getPrice();
     this.dateTime = s.getDateTime();
   }

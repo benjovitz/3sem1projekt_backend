@@ -19,7 +19,7 @@ public class Showing {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  int id;
+  long id;
 
   @Nonnull
   @ManyToOne
@@ -30,8 +30,8 @@ public class Showing {
   Cinema cinema;
 
 
-  //@OneToMany(mappedBy = "showing")
-  //List<Reservation> reservations = new ArrayList<>();
+  @OneToMany(mappedBy = "showing")
+  List<Reservation> reservations = new ArrayList<>();
 
   @Nonnull
   double price;

@@ -29,7 +29,7 @@ public class ReservationService {
   }
 
 
-  public ReservationResponse getReservation(int id){
+  public ReservationResponse getReservation(long id){
     Reservation reservation = reservationRepository.findReservationById(id);
     return new ReservationResponse(reservation);
   }
@@ -40,7 +40,7 @@ public class ReservationService {
     return reservationResponses;
   }
 
-  public List<ReservationResponse> getAllShowReservations(String username, int showId){
+  public List<ReservationResponse> getAllShowReservations(String username, long showId){
     /*
 
     User user = userRepository.findByUsername(username)
@@ -85,7 +85,7 @@ public class ReservationService {
     return new ReservationResponse(updatedReservation);
   }
 
-  public void deleteReservation(String username, int id){
+  public void deleteReservation(String username, long id){
     if(!reservationRepository.existsByUserUsernameAndId(username, id)){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Username does not match with reservation-id");
     }
@@ -95,7 +95,7 @@ public class ReservationService {
     reservationRepository.deleteById(id);
   }
 
-  public boolean areSeatsAvailable(ArrayList<String> seats, int showingId){
+  public boolean areSeatsAvailable(ArrayList<String> seats, long showingId){
     List<Reservation> showingReservations = reservationRepository.findAllByShowingId(showingId);
       for(Reservation res : showingReservations){
         for(String seat : seats){

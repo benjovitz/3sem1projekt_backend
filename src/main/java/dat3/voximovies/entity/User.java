@@ -73,7 +73,6 @@ public class User extends UserWithRoles {
   private double ranking;
 
 
-  /*
   @OneToMany(mappedBy = "user")
   private List<Reservation> reservations;
 
@@ -84,7 +83,6 @@ public class User extends UserWithRoles {
     reservations.add(reservation);
   }
 
-   */
 
   public User(String user, String password, String email,
                 String fullName, String phone, String address, String city, String zip) {

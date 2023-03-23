@@ -30,7 +30,7 @@ public class ShowingService {
   }
 
 
-  public ShowingResponse getShowingById(int showId){
+  public ShowingResponse getShowingById(long showId){
     if(!showingRepository.existsById(showId)){
       throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Show with this ID doesn't exist");
     }
@@ -47,7 +47,7 @@ public class ShowingService {
     return showingResponses;
   }
 
-  public List<ShowingResponse> getAllShowingsForCinema(int cinemaId){
+  public List<ShowingResponse> getAllShowingsForCinema(long cinemaId){
     if(!cinemaRepository.existsById(cinemaId)){
       throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No cinema found");
     }
@@ -58,7 +58,7 @@ public class ShowingService {
 
 
   public ShowingResponse createShowing(String username, ShowingRequest request){
-    if(!cinemaRepository.existsByIdAndUserUsername(request.getCinemaId(), username)){
+    if(!cinemaRepository.existsByIdAndOwnerUsername(request.getCinemaId(), username)){
       throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Owner to cinema does not match");
     }
     if(!movieRepository.existsById(request.getMovieId())){
@@ -74,11 +74,11 @@ public class ShowingService {
     return new ShowingResponse(newShowing);
   }
 
-  public ShowingResponse updateShowing(String username, ShowingRequest request,int showId){
-    if(!cinemaRepository.existsByIdAndUserUsername(request.getCinemaId(), username)){
+  public ShowingResponse updateShowing(String username, ShowingRequest request,long showId){
+    if(!cinemaRepository.existsByIdAndOwnerUsername(request.getCinemaId(), username)){
       throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Owner to cinema does not match");
     }
-    if(!showingRepository.existsByIdAndCinemaUserUsername(showId, username)){
+    if(!showingRepository.existsByIdAndCinemaOwnerUsername(showId, username)){
       throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Showing does not match user");
     }
     if(!movieRepository.existsById(request.getMovieId())){
@@ -103,8 +103,8 @@ public class ShowingService {
 
   }
 
-  public void deleteShowing(String username, int showId){
-    if(!showingRepository.existsByIdAndCinemaUserUsername(showId, username)){
+  public void deleteShowing(String username, long showId){
+    if(!showingRepository.existsByIdAndCinemaOwnerUsername(showId, username)){
       throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No such show id found for user");
     }
     showingRepository.deleteById(showId);
