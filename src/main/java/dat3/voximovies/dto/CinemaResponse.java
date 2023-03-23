@@ -13,6 +13,7 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CinemaResponse {
     long id;
+    String name;
      String description;
     //list of reviews
     //list of shows
@@ -25,6 +26,7 @@ public class CinemaResponse {
     //User contactPerson;
     Integer numberOfRatings;
     public CinemaResponse(Cinema c){
+        this.name=c.getName();
         this.id=c.getId();
         this.description=c.getDescription();
         this.street=c.getStreet();
