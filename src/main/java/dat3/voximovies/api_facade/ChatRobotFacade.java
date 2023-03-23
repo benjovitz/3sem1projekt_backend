@@ -25,8 +25,9 @@ public class ChatRobotFacade {
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("model", "text-davinci-003");
         requestBody.put("prompt", chatStarter + text);
-        requestBody.put("temperature", 0.3);
+        requestBody.put("temperature", 0.5);
         requestBody.put("max_tokens", maxTokens);
+        //requestBody.put("restart_sequence", "kunde");
         requestBody.put("top_p", 1.0);
         requestBody.put("frequency_penalty", 0.0);
         requestBody.put("presence_penalty", 0.0);

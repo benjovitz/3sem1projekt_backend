@@ -56,7 +56,7 @@ public class SetupDevUsers implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws JsonProcessingException {
         //setupCinemas();
-        String str = "og efter det?";
+        String str = "Jeg kunne godt tænke mig at se mad max eller noget der minder om det";
         System.out.println(chatService.chatAnswer(str));
     }
 
