@@ -7,11 +7,13 @@ import dat3.voximovies.entity.Movie;
 import dat3.voximovies.entity.Showing;
 import dat3.voximovies.repository.CinemaRepository;
 import dat3.voximovies.repository.MovieRepository;
+import dat3.voximovies.repository.ReservationRepository;
 import dat3.voximovies.repository.ShowingRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -21,12 +23,14 @@ public class ShowingService {
   ShowingRepository showingRepository;
   MovieRepository movieRepository;
   CinemaRepository cinemaRepository;
-  //ReservationRepository reservationRepository
 
-  public ShowingService(ShowingRepository showingRepository,  MovieRepository movieRepository, CinemaRepository cinemaRepository){
+  ReservationRepository reservationRepository;
+
+  public ShowingService(ShowingRepository showingRepository,  MovieRepository movieRepository, CinemaRepository cinemaRepository, ReservationRepository reservationRepository){
     this.showingRepository=showingRepository;
     this.movieRepository=movieRepository;
     this.cinemaRepository=cinemaRepository;
+    this.reservationRepository=reservationRepository;
   }
 
 
@@ -67,25 +71,26 @@ public class ShowingService {
     if(request.getDateTime()==null || request.getPrice()==null){
       throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Empty parameter are not allowed");
     }
+    if(request.getDateTime().isBefore(LocalDateTime.now())){
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Cannot set date in past");
+    }
     Movie movie = movieRepository.findMovieById(request.getMovieId());
     Cinema cinema = cinemaRepository.findCinemaById(request.getCinemaId());
     Showing newShowing = new Showing(movie,cinema,request.getPrice(),request.getDateTime());
+
+    showingRepository.save(newShowing);
 
     return new ShowingResponse(newShowing);
   }
 
   public ShowingResponse updateShowing(String username, ShowingRequest request,long showId){
-    if(!cinemaRepository.existsByIdAndOwnerUsername(request.getCinemaId(), username)){
+    Showing updatedShowing = showingRepository.findShowingById(showId);
+    if(!cinemaRepository.existsByIdAndOwnerUsername(updatedShowing.getCinema().getId(), username)){
       throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Owner to cinema does not match");
-    }
-    if(!showingRepository.existsByIdAndCinemaOwnerUsername(showId, username)){
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Showing does not match user");
     }
     if(!movieRepository.existsById(request.getMovieId())){
       throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Movie with this ID doesnt exist");
     }
-    Showing updatedShowing = showingRepository.findShowingById(showId);
-
     if(request.getMovieId()!=null){
       Movie movie = movieRepository.findMovieById(request.getMovieId());
       updatedShowing.setMovie(movie);
@@ -107,6 +112,7 @@ public class ShowingService {
     if(!showingRepository.existsByIdAndCinemaOwnerUsername(showId, username)){
       throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No such show id found for user");
     }
+    reservationRepository.deleteAllByShowingId(showId);
     showingRepository.deleteById(showId);
   }
 

@@ -32,25 +32,25 @@ public class ShowingController {
     return showingService.getAllShowingWithMovieName(movieName);
   }
 
-  @PreAuthorize("hasAuthority('User') and ('CINEMATIZER')")
+  @PreAuthorize("hasAuthority('User') or hasAnyAuthority('CINEMATICER')")
   @GetMapping("cinema/{cinemaId}")
   public List<ShowingResponse> getAllCinemaShows(@PathVariable long cinemaId){
     return showingService.getAllShowingsForCinema(cinemaId);
   }
 
-  @PreAuthorize("hasAuthority('CINEMATIZER')")
+  @PreAuthorize("hasAuthority('CINEMATICER')")
   @PostMapping
   public ShowingResponse createShowing(Principal p, @RequestBody ShowingRequest body){
     return showingService.createShowing(p.getName(),body);
   }
 
-  @PreAuthorize("hasAuthority('CINEMATIZER')")
+  @PreAuthorize("hasAuthority('CINEMATICER')")
   @PutMapping("{showId}")
   public ShowingResponse updateShowing(Principal p, @RequestBody ShowingRequest body, @PathVariable int showId){
     return showingService.updateShowing(p.getName(),body, showId);
   }
 
-  @PreAuthorize("hasAuthority('CINEMATIZER')")
+  @PreAuthorize("hasAuthority('CINEMATICER')")
   @DeleteMapping("{showId}")
   public void deleteShowing(Principal p, @PathVariable long showId){
     showingService.deleteShowing(p.getName(),showId);
