@@ -17,6 +17,7 @@ import dat3.voximovies.entity.User;
 import dat3.voximovies.repository.ReviewRepository;
 
 import dat3.voximovies.service.ChatService;
+import lombok.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Controller;
