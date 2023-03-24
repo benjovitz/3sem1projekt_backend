@@ -1,22 +1,24 @@
 package dat3.voximovies.repository;
 
 import dat3.voximovies.entity.Reservation;
-import dat3.voximovies.entity.User;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public interface ReservationRepository extends JpaRepository<Reservation,Integer> {
+public interface ReservationRepository extends JpaRepository<Reservation,Long> {
 
-  Reservation findReservationById(int id);
+  Reservation findReservationById(long id);
   ArrayList<Reservation> findAllByUserUsername(String username);
 
-  ArrayList<Reservation> findAllByShowingId(int showId);
+  ArrayList<Reservation> findAllByShowingId(long showId);
 
-  Reservation findByUserUsernameAndShowingId(String username, int showId);
+  Reservation findByUserUsernameAndShowingId(String username, long showId);
 
-  boolean existsByUserUsernameAndShowingId(String username, int showId);
+  boolean existsByUserUsernameAndShowingId(String username, long showId);
 
-  boolean existsByUserUsernameAndId(String username, int id);
+  boolean existsByUserUsernameAndId(String username, long id);
+
+  @Transactional
+  void deleteAllByShowingId(long id);
 }

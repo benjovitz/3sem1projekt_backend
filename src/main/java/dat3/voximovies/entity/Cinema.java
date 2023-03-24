@@ -35,6 +35,15 @@ public class Cinema {
         r.setReviewedCinema(this);
     }
     //list of shows
+    @OneToMany(mappedBy = "cinema")
+    List<Showing> showings;
+    public void addShowing(Showing s){
+        if(showings ==null){
+            showings = new ArrayList<>();
+        }
+        showings.add(s);
+    }
+
     //list of seats
     @ElementCollection
     @Column(name = "seat")

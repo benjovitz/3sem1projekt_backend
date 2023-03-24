@@ -22,7 +22,7 @@ public class ReservationController {
 
   @PreAuthorize("hasAuthority('ADMIN')")
   @GetMapping("{id}")
-  public ReservationResponse getReservation(@PathVariable int id){
+  public ReservationResponse getReservation(@PathVariable long id){
     return reservationService.getReservation(id);
   }
 
@@ -36,7 +36,7 @@ public class ReservationController {
 
   @PreAuthorize("hasAuthority('CINEMATICER')")
   @GetMapping("owner/{showingId}") //Untested
-  public List<ReservationResponse> getAllShowReservations(Principal p, @PathVariable int showingId){
+  public List<ReservationResponse> getAllShowReservations(Principal p, @PathVariable long showingId){
     return reservationService.getAllShowReservations(p.getName(),showingId);
   }
 
@@ -54,7 +54,7 @@ public class ReservationController {
 
   @PreAuthorize("hasAuthority('USER')")
   @DeleteMapping("{id}")
-  public void deleteReservation(Principal p, @PathVariable int id){
+  public void deleteReservation(Principal p, @PathVariable long id){
     reservationService.deleteReservation(p.getName(),id);
   }
 

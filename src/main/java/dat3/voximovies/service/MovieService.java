@@ -32,7 +32,7 @@ public class MovieService {
 
     }
 
-    public Movie findMovie(int id){
+    public Movie findMovie(long id){
 
         Movie movie = movieRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Movie with this ID doesnt exist"));
 
@@ -40,7 +40,7 @@ public class MovieService {
     }
 
 
-    public MovieResponse findMovieById(int id) {
+    public MovieResponse findMovieById(long id) {
 
         Movie movie = findMovie(id);
         MovieResponse movieResponse = new MovieResponse(movie);
@@ -58,7 +58,7 @@ public class MovieService {
     }
 
 
-    public ResponseEntity<Boolean> editMovie(MovieRequest body, int id) {
+    public ResponseEntity<Boolean> editMovie(MovieRequest body, long id) {
 
         Movie movieToEdit =  findMovie(id);
         Optional.ofNullable(body.getName()).ifPresent(movieToEdit::setName);
@@ -71,7 +71,7 @@ public class MovieService {
 
 
 
-    public void deleteMovieById(int id) {
+    public void deleteMovieById(long id) {
 
         Movie movie = findMovie(id);
         movieRepository.delete(movie);

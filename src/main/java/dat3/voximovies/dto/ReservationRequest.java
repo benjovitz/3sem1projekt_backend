@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ReservationRequest {
 
-  private Integer showingId;
+  private Long showingId;
 
   private List<String> seats = new ArrayList<>();
 
@@ -24,7 +24,7 @@ public class ReservationRequest {
     return new Reservation(u ,s , rr.getSeats());
   }
 
-  public ReservationRequest(Integer showingId, List<String> seats) {
+  public ReservationRequest(Long showingId, List<String> seats) {
     this.showingId = showingId;
     this.seats = seats;
   }
