@@ -13,5 +13,6 @@ public class ChatRequest {
 
     String username;
     String chatMessage;
+    Boolean chatStarted;
 
 }

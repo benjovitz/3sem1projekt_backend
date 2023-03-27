@@ -23,6 +23,7 @@ public class ChatRobotFacade {
     String chatQuestion;
     RestTemplate restTemplate = new RestTemplate();
 
+    //Tag request ind i stedet så vi kan få chatstarter fra local storage
     public String chatHelp(String text, int maxTokens) throws JsonProcessingException {
         String chatContinue = chatStarter+ "Du er lige blevet spurgt om: "+chatQuestion+" og du svaret: "+chatAnswer+" Svar på næste spørgsmål i sammenhængende kontekst";
         chatQuestion=text;
