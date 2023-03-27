@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ShowingResponse {
 
+  long cinemaId;
 
   String movieName;
 
@@ -28,6 +29,7 @@ public class ShowingResponse {
   LocalDateTime localDateTime;
 
   public ShowingResponse(Showing s) {
+    this.cinemaId = s.getCinema().getId();
     this.movieName=s.getMovie().getName();
     this.cinemaName=s.getCinema().getName();
     this.price = s.getPrice();
