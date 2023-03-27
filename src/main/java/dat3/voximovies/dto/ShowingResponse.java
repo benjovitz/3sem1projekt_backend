@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,6 +26,7 @@ public class ShowingResponse {
 
   double price;
 
+  private List<String> resSeats = new ArrayList<>();
 
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
   LocalDateTime localDateTime;
@@ -33,6 +36,7 @@ public class ShowingResponse {
     this.movieName=s.getMovie().getName();
     this.cinemaName=s.getCinema().getName();
     this.price = s.getPrice();
+    this.resSeats = s.getOccupiedSeats();
     this.localDateTime = s.getDateTime();
   }
 }

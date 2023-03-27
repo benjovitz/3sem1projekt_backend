@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,7 +18,7 @@ public class CinemaResponse {
      String description;
     //list of reviews
     //list of shows
-    //list of seats
+     List<String> seats = new ArrayList<>();
      String street;
      String city;
      String zip;
@@ -26,6 +29,7 @@ public class CinemaResponse {
     public CinemaResponse(Cinema c){
         this.id=c.getId();
         this.description=c.getDescription();
+        this.seats= c.getSeats();
         this.street=c.getStreet();
         this.city=c.getCity();
         this.zip=c.getZip();
