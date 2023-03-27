@@ -58,7 +58,7 @@ public class SetupDevUsers implements ApplicationRunner {
       userWithRolesRepository.save(user1);
       userWithRolesRepository.save(user2);
       userWithRolesRepository.save(user3);
-      Cinema c1 = Cinema.builder().owner(user1).name("Daniels Bio").description("God hjemmebio").zip("2000").street("Aurikelvej 6 1 tv").city("Frederiksberg").build();
+      Cinema c1 = Cinema.builder().owner(user1).name("Daniels Bio").description("God hjemmebio").zip("2000").street("Aurikelvej 6 1 tv").city("Frederiksberg").seats(Arrays.asList("a1","a2","a3","a4","b1","b2","b3","c1","c2")).build();
       Cinema c2 = Cinema.builder().owner(user3).name("TestNavn1").description("Cozy and comfortable").zip("2100").street("Østerbrogade 12 3 th").city("København Ø").build();
       Cinema c3 = Cinema.builder().owner(user3).name("TestNavn2").description("Modern and spacious").zip("2300").street("Amagerbrogade 45 2 mf").city("København S").build();
       Cinema c4 = Cinema.builder().owner(user3).name("TestNavn3").description("Small but charming").zip("2200").street("Nørrebrogade 33 4 tv").city("København N").build();
