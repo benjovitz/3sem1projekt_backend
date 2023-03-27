@@ -1,5 +1,6 @@
 package dat3.voximovies.service;
 
+import dat3.security.entity.Role;
 import dat3.voximovies.dto.UserRequest;
 import dat3.voximovies.dto.UserResponse;
 import dat3.voximovies.entity.User;
@@ -44,6 +45,8 @@ public class UserService {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"User with this Email already exist");
     }
 
+    newUser.addRole(Role.USER);
+
     userRepository.save(newUser);
 
     return new UserResponse(newUser, true);
@@ -66,5 +69,12 @@ public class UserService {
     updatedUser.setZip(userRequest.getZip());
     userRepository.save(updatedUser);
     return new ResponseEntity<Boolean>(true,HttpStatus.OK);
+  }
+
+  public ResponseEntity<Boolean> addUserRole(String username, Role role) {
+    User user = userRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+    user.addRole(role);
+    userRepository.save(user);
+    return new ResponseEntity<Boolean>(true, HttpStatus.OK);
   }
 }

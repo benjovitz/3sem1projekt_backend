@@ -1,15 +1,18 @@
 package dat3.voximovies.api;
 
+import dat3.security.entity.Role;
 import dat3.voximovies.dto.UserRequest;
 import dat3.voximovies.dto.UserResponse;
 import dat3.voximovies.service.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/users/")
 public class UserController {
 
@@ -31,6 +34,7 @@ public class UserController {
     return userService.addUser(body);
   }
 
+  @PreAuthorize("hasAuthority('USER')")
   @DeleteMapping("{username}")
   void deleteUserByUsername(@PathVariable String username) {
     userService.deleteUser(username);
@@ -42,10 +46,16 @@ public class UserController {
   }
 
   /*
-  @PatchMapping("/ranking/{username}/{value}")
+  @PatchMapping("ranking/{username}/{value}")
   void updateRankingForUser(@PathVariable String username, @PathVariable int value) {
     userService.updateRanking(username, value);
   }
 
    */
+
+  @PreAuthorize("hasAuthority('ADMIN')")
+  @PatchMapping("admin/{username}/{role}")
+  ResponseEntity<Boolean> addUserRole(@PathVariable String username, @PathVariable Role role) {
+    return userService.addUserRole(username, role);
+  }
 }
