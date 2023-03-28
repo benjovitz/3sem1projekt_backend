@@ -47,7 +47,7 @@ public class Cinema {
     //list of seats
     @ElementCollection
     @Column(name = "seat")
-    List<String> seats = new ArrayList<>();
+    private List<String> seats = new ArrayList<>();
     @Nonnull
     private String street;
     @Nonnull

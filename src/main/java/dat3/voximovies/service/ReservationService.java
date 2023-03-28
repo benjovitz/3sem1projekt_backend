@@ -64,6 +64,9 @@ public class ReservationService {
     if(!areSeatsAvailable((ArrayList<String>) rr.getSeats(),rr.getShowingId())){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Contains seats that are already reserved");
     }
+    if(rr.getSeats().isEmpty()){
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"You cannot make a reservation without seats");
+    }
     User user = userRepository.findByUsername(username);
     Showing showing = showingRepository.findShowingById(rr.getShowingId());
     Reservation newReservation = ReservationRequest.getReservationEntity(rr,user, showing);

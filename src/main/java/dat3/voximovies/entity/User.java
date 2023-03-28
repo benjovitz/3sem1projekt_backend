@@ -49,7 +49,7 @@ public class User extends UserWithRoles {
   @UpdateTimestamp
   private LocalDateTime lastEdited;
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "reviewedUser")
   List<Review> reviews = new ArrayList<>();
 
   public void addReview(Review review) {

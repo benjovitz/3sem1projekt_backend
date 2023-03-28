@@ -27,9 +27,9 @@ public class ShowingController {
   }
 
   @PreAuthorize("hasAuthority('USER')")
-  @GetMapping("movie/{movieName}")
-  public List<ShowingResponse> getAllShowingsOfMovie(@PathVariable String movieName){
-    return showingService.getAllShowingWithMovieName(movieName);
+  @GetMapping("movie/{movieId}")
+  public List<ShowingResponse> getAllShowingsOfMovie(@PathVariable long movieId){
+    return showingService.getAllShowingsWithMovieId(movieId);
   }
 
   @PreAuthorize("hasAuthority('User') or hasAnyAuthority('CINEMATICER')")
