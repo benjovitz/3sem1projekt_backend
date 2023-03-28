@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CinemaRequest {
+    String name;
     private String description;
     //list of reviews
     //list of shows
@@ -25,7 +26,7 @@ public class CinemaRequest {
     //private User contactPerson;
 
     public static Cinema getCinemaEntity(CinemaRequest c){
-        Cinema cinema =  Cinema.builder().description(c.getDescription()).street(c.getStreet()).city(c.getCity()).zip(c.getZip()).owner(c.getOwner()).build();
+        Cinema cinema =  Cinema.builder().name(c.getName()).description(c.getDescription()).street(c.getStreet()).city(c.getCity()).zip(c.getZip()).owner(c.getOwner()).build();
         return cinema;
     }
 }

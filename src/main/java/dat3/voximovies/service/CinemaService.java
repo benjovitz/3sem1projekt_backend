@@ -55,6 +55,7 @@ public class CinemaService {
 
     public CinemaResponse editCinema(Long id, CinemaRequest request) {
         Cinema cinema = findCinemaByID(id);
+        Optional.ofNullable(request.getName()).ifPresent(cinema::setName);
         Optional.ofNullable(request.getCity()).ifPresent(cinema::setCity);
         Optional.ofNullable(request.getZip()).ifPresent(cinema::setZip);
         Optional.ofNullable(request.getStreet()).ifPresent(cinema::setStreet);
