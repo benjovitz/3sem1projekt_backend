@@ -3,7 +3,9 @@ package dat3.voximovies.service;
 import dat3.voximovies.dto.CinemaRequest;
 import dat3.voximovies.dto.CinemaResponse;
 import dat3.voximovies.entity.Cinema;
+import dat3.voximovies.entity.User;
 import dat3.voximovies.repository.CinemaRepository;
+import dat3.voximovies.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,9 +20,11 @@ import java.util.Optional;
 public class CinemaService {
 
     CinemaRepository cinemaRepository;
+    UserRepository userRepository;
 
-    public CinemaService(CinemaRepository cinemaRepository){
+    public CinemaService(CinemaRepository cinemaRepository, UserRepository userRepository){
         this.cinemaRepository=cinemaRepository;
+        this.userRepository=userRepository;
     }
     public Cinema findCinemaByID(Long id) {
         Cinema cinema = cinemaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Cinema with this ID doesnt exist"));
@@ -58,6 +62,13 @@ public class CinemaService {
         Optional.ofNullable(request.getOwner()).ifPresent(cinema::setOwner);
         cinemaRepository.save(cinema);
         return new CinemaResponse(cinema);
+    }
+
+    public List<CinemaResponse> getCinemasByUsername(String name) {
+        User owner = userRepository.findByUsername(name);
+        List<Cinema> cinemas = cinemaRepository.findAllByOwner(owner);
+        List<CinemaResponse> cRes = cinemas.stream().map(cinema -> new CinemaResponse(cinema)).toList();
+        return cRes;
     }
 }
 
