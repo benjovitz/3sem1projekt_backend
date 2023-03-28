@@ -22,9 +22,11 @@ public class UserController {
     this.userService = userService;
   }
 
+  @PreAuthorize("hasAuthority('ADMIN')")
   @GetMapping
-  List<UserResponse> getMembers(){ return userService.getUsers(true);}
+  List<UserResponse> getUsers(){ return userService.getUsers(true);}
 
+  @PreAuthorize("hasAuthority('ADMIN')")
   @GetMapping("{username}")
   UserResponse getUserById(@PathVariable String username) throws Exception {return userService.findUserByUsername(username);}
 
@@ -34,12 +36,13 @@ public class UserController {
     return userService.addUser(body);
   }
 
-  @PreAuthorize("hasAuthority('USER')")
+  @PreAuthorize("hasAuthority('ADMIN')")
   @DeleteMapping("{username}")
   void deleteUserByUsername(@PathVariable String username) {
     userService.deleteUser(username);
   }
 
+  @PreAuthorize("hasAuthority('USER')")
   @PutMapping(path = "{username}")
   ResponseEntity<Boolean> editUser(@RequestBody UserRequest body, @PathVariable String username){
     return userService.updateUser(username, body);
