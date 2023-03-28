@@ -19,6 +19,7 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long> {
 
   boolean existsByUserUsernameAndId(String username, long id);
 
+
   @Transactional
   void deleteAllByShowingId(long id);
 }
