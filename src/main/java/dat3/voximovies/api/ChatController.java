@@ -16,8 +16,8 @@ public class ChatController {
     public ChatController(ChatService chatService){
         this.chatService = chatService;
     }
-    @GetMapping
+    @PostMapping
     ChatResponse getChatResponse(@RequestBody ChatRequest request) throws JsonProcessingException {
-        return chatService.chatAnswer(request.getChatMessage());
+        return chatService.chatAnswer(request);
     }
 }
