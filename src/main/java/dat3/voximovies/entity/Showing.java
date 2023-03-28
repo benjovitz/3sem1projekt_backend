@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -32,6 +34,12 @@ public class Showing {
 
   @OneToMany(mappedBy = "showing")
   List<Reservation> reservations = new ArrayList<>();
+
+  public List<String> getOccupiedSeats(){
+    ArrayList<String> occupiedSeats = new ArrayList<>();
+    reservations.forEach(r -> occupiedSeats.addAll(r.getSeats()));
+    return occupiedSeats;
+  }
 
   @Nonnull
   double price;

@@ -9,7 +9,7 @@ public interface ShowingRepository extends JpaRepository<Showing,Long> {
 
   ArrayList<Showing> findAllByCinemaId(long id);
 
-  ArrayList<Showing> findAllByMovieName(String movieName);
+  ArrayList<Showing> findAllByMovieId(long id);
 
   Showing findShowingById(long id);
 

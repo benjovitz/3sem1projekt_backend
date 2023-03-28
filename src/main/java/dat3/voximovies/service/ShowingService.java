@@ -42,11 +42,11 @@ public class ShowingService {
     return new ShowingResponse(showing);
   }
 
-  public List<ShowingResponse> getAllShowingWithMovieName(String movieName){
-    if(!movieRepository.existsByName(movieName)){
+  public List<ShowingResponse> getAllShowingsWithMovieId(long movieId){
+    if(!movieRepository.existsById(movieId)){
       throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No shows feature specified movie");
     }
-    List<Showing> movieList = showingRepository.findAllByMovieName(movieName);
+    List<Showing> movieList = showingRepository.findAllByMovieId(movieId);
     List<ShowingResponse> showingResponses = movieList.stream().map( s -> new ShowingResponse(s)).toList();
     return showingResponses;
   }
