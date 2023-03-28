@@ -71,5 +71,10 @@ public class CinemaService {
         List<CinemaResponse> cRes = cinemas.stream().map(cinema -> new CinemaResponse(cinema)).toList();
         return cRes;
     }
+
+    public CinemaResponse findCinemaByName(String cinemaName) {
+        Cinema cinema = cinemaRepository.findByName(cinemaName);
+        return new CinemaResponse(cinema);
+    }
 }
 

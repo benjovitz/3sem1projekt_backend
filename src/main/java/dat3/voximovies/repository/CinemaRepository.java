@@ -16,4 +16,6 @@ public interface CinemaRepository extends JpaRepository<Cinema,Long> {
 
   List<Cinema> findAllByOwner(User owner);
 
+  Cinema findByName(String name);
+
 }
