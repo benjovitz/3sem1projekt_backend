@@ -28,7 +28,7 @@ public class MovieController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     MovieResponse getMovieById(@PathVariable long id) throws Exception {
         return movieService.findMovieById(id);
     }
@@ -39,15 +39,20 @@ public class MovieController {
         return movieService.addMovie(body);
     }
 
+    @PostMapping(path = "{movieKey}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    MovieResponse addMovieWithKey(@PathVariable String movieKey) {
+        return movieService.addMovieFromAPI(movieKey);
+    }
 
-    @PutMapping("/{id}")
+
+    @PutMapping("{id}")
     public ResponseEntity<Boolean> editMovie(@PathVariable long id, @RequestBody MovieRequest body) {
         movieService.editMovie(body,id);
         return ResponseEntity.ok(true);
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     void deleteMovieById(@PathVariable long id) {
         movieService.deleteMovieById(id);
     }
