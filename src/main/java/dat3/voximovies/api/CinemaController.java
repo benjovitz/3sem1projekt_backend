@@ -45,8 +45,8 @@ public class CinemaController {
  
     @PreAuthorize("hasAuthority('CINEMATICER')")
     @DeleteMapping("/{id}")
-    void deleteCinema(@PathVariable Long id){
-        cinemaService.deleteCinema(id);
+    void deleteCinema(@PathVariable Long id, Principal p){
+        cinemaService.deleteCinema(id,p.getName());
     }
     
     @PreAuthorize("hasAuthority('CINEMATICER')")
