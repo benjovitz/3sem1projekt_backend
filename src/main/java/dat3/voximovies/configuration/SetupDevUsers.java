@@ -1,10 +1,22 @@
 package dat3.voximovies.configuration;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import dat3.security.entity.Role;
 import dat3.security.entity.UserWithRoles;
 import dat3.voximovies.entity.*;
 import dat3.voximovies.repository.*;
 
+
+
+import dat3.voximovies.entity.Cinema;
+import dat3.voximovies.entity.Review;
+import dat3.voximovies.repository.CinemaRepository;
+
+import dat3.voximovies.entity.User;
+
+import dat3.voximovies.repository.ReviewRepository;
+
+import dat3.voximovies.service.ChatService;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -26,7 +38,8 @@ public class SetupDevUsers implements ApplicationRunner {
     ShowingRepository showingRepository;
     ReservationRepository reservationRepository;
     ReviewRepository reviewRepository;
-    String passwordUsedByAll;
+    ChatService chatService;
+
 
     public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, CinemaRepository cinemaRepository, ReviewRepository reviewRepository, MovieRepository movieRepository, ShowingRepository showingRepository, ReservationRepository reservationRepository) {
         passwordUsedByAll = "test12";
@@ -36,11 +49,14 @@ public class SetupDevUsers implements ApplicationRunner {
         this.reviewRepository = reviewRepository;
         this.showingRepository=showingRepository;
         this.reservationRepository=reservationRepository;
+
+        this.showingRepository=showingRepository;
+        this.reservationRepository=reservationRepository;
     }
 
     @Override
-    public void run(ApplicationArguments args) {
-        setupCinemas();
+    public void run(ApplicationArguments args) throws JsonProcessingException {
+        //setupCinemas();
     }
 
     private void setupCinemas() {
