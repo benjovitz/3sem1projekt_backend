@@ -3,9 +3,21 @@ package dat3.voximovies.service;
 import dat3.voximovies.dto.CinemaRequest;
 import dat3.voximovies.dto.CinemaResponse;
 import dat3.voximovies.entity.Cinema;
+
 import dat3.voximovies.entity.Showing;
 import dat3.voximovies.entity.User;
 import dat3.voximovies.repository.*;
+
+
+import dat3.voximovies.entity.Showing;
+import dat3.voximovies.entity.User;
+import dat3.voximovies.repository.*;
+
+import dat3.voximovies.entity.User;
+import dat3.voximovies.repository.CinemaRepository;
+import dat3.voximovies.repository.UserRepository;
+
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,11 +36,21 @@ public class CinemaService {
     ShowingRepository showingRepository;
     UserRepository userRepository;
 
-    public CinemaService(CinemaRepository cinemaRepository, ReservationRepository reservationRepository, ShowingRepository showingRepository, UserRepository userRepository) {
+
+    ReservationRepository reservationRepository;
+    ReviewRepository reviewRepository;
+    ShowingRepository showingRepository;
+    UserRepository userRepository;
+
+    public CinemaService(CinemaRepository cinemaRepository, ReservationRepository reservationRepository, ReviewRepository reviewRepository, ShowingRepository showingRepository, UserRepository userRepository) {
         this.cinemaRepository = cinemaRepository;
         this.reservationRepository = reservationRepository;
+        this.reviewRepository = reviewRepository;
         this.showingRepository = showingRepository;
         this.userRepository = userRepository;
+
+ 
+
     }
 
     public Cinema findCinemaByID(Long id) {
@@ -68,12 +90,25 @@ public class CinemaService {
 
     public CinemaResponse editCinema(Long id, CinemaRequest request) {
         Cinema cinema = findCinemaByID(id);
+        Optional.ofNullable(request.getName()).ifPresent(cinema::setName);
         Optional.ofNullable(request.getCity()).ifPresent(cinema::setCity);
         Optional.ofNullable(request.getZip()).ifPresent(cinema::setZip);
         Optional.ofNullable(request.getStreet()).ifPresent(cinema::setStreet);
         Optional.ofNullable(request.getDescription()).ifPresent(cinema::setDescription);
         Optional.ofNullable(request.getOwner()).ifPresent(cinema::setOwner);
         cinemaRepository.save(cinema);
+        return new CinemaResponse(cinema);
+    }
+
+    public List<CinemaResponse> getCinemasByUsername(String name) {
+        User owner = userRepository.findByUsername(name);
+        List<Cinema> cinemas = cinemaRepository.findAllByOwner(owner);
+        List<CinemaResponse> cRes = cinemas.stream().map(cinema -> new CinemaResponse(cinema)).toList();
+        return cRes;
+    }
+
+    public CinemaResponse findCinemaByName(String cinemaName) {
+        Cinema cinema = cinemaRepository.findByName(cinemaName);
         return new CinemaResponse(cinema);
     }
 }
