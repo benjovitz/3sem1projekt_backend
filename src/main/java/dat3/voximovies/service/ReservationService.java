@@ -41,12 +41,7 @@ public class ReservationService {
   }
 
   public List<ReservationResponse> getAllShowReservations(String username, long showId){
-    /*
-
-    User user = userRepository.findByUsername(username)
-    if(!showRepository.existsByShowIdAndCinemaUser(showId, user))
-    */
-    if(!showingRepository.existsById(showId)){ //Skal erstattes med overstående nå Cinema er implementeret
+    if(!showingRepository.existsByIdAndCinemaOwnerUsername(showId, username)){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"You do not own a cinema with such Id");
     }
     List<Reservation> showReservations = reservationRepository.findAllByShowingId(showId);
@@ -79,6 +74,7 @@ public class ReservationService {
     if(rr.getSeats().isEmpty()) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You cannot make a reservation without seats");
     }
+
     Reservation updatedReservation = reservationRepository.findReservationById(resId);
     if(!updatedReservation.getShowing().getCinema().getOwner().getUsername().equalsIgnoreCase(username)){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Reservation is not from your cinema");
