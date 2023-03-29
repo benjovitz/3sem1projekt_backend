@@ -23,7 +23,7 @@ public class ReviewResponse {
     public ReviewResponse(Review review){
         this.comment=review.getComment();
         this.score=review.getScore();
-        this.username=review.getUsername();
+        this.username=review.getUser().getUsername();
         if (review.getReviewedCinema() != null) {
             this.cinemaName=review.getReviewedCinema().getName();
         }
