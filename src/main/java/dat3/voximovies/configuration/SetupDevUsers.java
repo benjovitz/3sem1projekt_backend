@@ -41,6 +41,8 @@ public class SetupDevUsers implements ApplicationRunner {
     final String passwordUsedByAll;
 
 
+    String passwordUsedByAll = "test12";
+
 
     public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, CinemaRepository cinemaRepository, ReviewRepository reviewRepository, MovieRepository movieRepository, ShowingRepository showingRepository, ReservationRepository reservationRepository) {
         passwordUsedByAll = "test12";

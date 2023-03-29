@@ -15,6 +15,7 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/api/review/")
 public class ReviewController {
+
     ReviewService reviewService;
     CinemaService cinemaService;
 
@@ -22,15 +23,27 @@ public class ReviewController {
         this.reviewService = reviewService;
         this.cinemaService = cinemaService;
     }
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     List<ReviewResponse> getAllReviews(){
       return reviewService.getAllReviews();
     }
+
     @PreAuthorize("hasAuthority('CINEMATICER')")
     @PostMapping("user/{username}")
     ReviewResponse createReviewForUser(@RequestBody ReviewRequest request,@PathVariable String username){
         return reviewService.createUserReview(request, username);
+    }
+
+    @GetMapping("user/{username}")
+    List<ReviewResponse> getUserReviews(@PathVariable String username){
+        return reviewService.getUserReviews(username);
+    }
+
+    @GetMapping("cinema/{id}")
+    List<ReviewResponse> getCinemaReviews(@PathVariable long id){
+        return reviewService.getCinemaReviews(id);
     }
 
     @PostMapping("cinema/{cinemaID}")

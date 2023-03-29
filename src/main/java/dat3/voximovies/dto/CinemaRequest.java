@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CinemaRequest {
+
     private String name;
     private String description;
     //list of reviews
