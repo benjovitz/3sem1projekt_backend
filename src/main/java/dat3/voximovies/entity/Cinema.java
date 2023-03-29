@@ -25,11 +25,11 @@ public class Cinema {
     private String description;
     //list of reviews
     @OneToMany(mappedBy = "reviewedCinema",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    Set<Review> reviews = new HashSet<>();
+    List<Review> reviews = new ArrayList<>();
 
     public void addReview(Review r){
         if(reviews ==null){
-            reviews =new HashSet<>();
+            reviews =new ArrayList<>();
         }
         reviews.add(r);
         r.setReviewedCinema(this);

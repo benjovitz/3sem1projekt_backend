@@ -17,7 +17,7 @@ public class ReviewResponse {
     String comment;
     Double score;
     String username;
-    User reviewedUser;
+    String reviewedUser;
     String cinemaName;
 
     public ReviewResponse(Review review){
@@ -26,8 +26,9 @@ public class ReviewResponse {
         this.username=review.getUsername();
         if (review.getReviewedCinema() != null) {
             this.cinemaName=review.getReviewedCinema().getName();
-        } else {
-            this.reviewedUser=review.getReviewedUser();
+        }
+        if (review.getReviewedUser() != null) {
+            this.reviewedUser=review.getReviewedUser().getUsername();
         }
     }
 

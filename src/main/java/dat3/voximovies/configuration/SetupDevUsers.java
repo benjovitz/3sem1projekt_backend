@@ -40,6 +40,8 @@ public class SetupDevUsers implements ApplicationRunner {
     ReviewRepository reviewRepository;
     ChatService chatService;
 
+    String passwordUsedByAll = "test12";
+
 
     public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, CinemaRepository cinemaRepository, ReviewRepository reviewRepository, MovieRepository movieRepository, ShowingRepository showingRepository, ReservationRepository reservationRepository) {
         passwordUsedByAll = "test12";
@@ -56,7 +58,7 @@ public class SetupDevUsers implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws JsonProcessingException {
-        //setupCinemas();
+        setupCinemas();
     }
 
     private void setupCinemas() {
