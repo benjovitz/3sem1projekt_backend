@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/movies/")
+@RequestMapping("/api/movies/")
 public class MovieController {
 
     MovieService movieService;
@@ -28,8 +28,8 @@ public class MovieController {
     }
 
 
-    @GetMapping("/{id}")
-    MovieResponse getMovieById(@PathVariable int id) throws Exception {
+    @GetMapping("{id}")
+    MovieResponse getMovieById(@PathVariable long id) throws Exception {
         return movieService.findMovieById(id);
     }
 
@@ -39,16 +39,21 @@ public class MovieController {
         return movieService.addMovie(body);
     }
 
+    @PostMapping(path = "{movieKey}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    MovieResponse addMovieWithKey(@PathVariable String movieKey) {
+        return movieService.addMovieFromAPI(movieKey);
+    }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Boolean> editMovie(@PathVariable int id, @RequestBody MovieRequest body) {
+
+    @PutMapping("{id}")
+    public ResponseEntity<Boolean> editMovie(@PathVariable long id, @RequestBody MovieRequest body) {
         movieService.editMovie(body,id);
         return ResponseEntity.ok(true);
     }
 
 
-    @DeleteMapping("/{id}")
-    void deleteMovieById(@PathVariable int id) {
+    @DeleteMapping("{id}")
+    void deleteMovieById(@PathVariable long id) {
         movieService.deleteMovieById(id);
     }
 

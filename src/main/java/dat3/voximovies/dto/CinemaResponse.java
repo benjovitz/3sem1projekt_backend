@@ -2,10 +2,12 @@ package dat3.voximovies.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import dat3.voximovies.entity.Cinema;
-import dat3.voximovies.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,24 +15,27 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CinemaResponse {
     long id;
+    String name;
      String description;
     //list of reviews
     //list of shows
-    //list of seats
+     List<String> seats = new ArrayList<>();
      String street;
      String city;
      String zip;
-     User owner; //temp
+     String ownerName; //temp
     Double rating;
     //User contactPerson;
     Integer numberOfRatings;
     public CinemaResponse(Cinema c){
+        this.name=c.getName();
         this.id=c.getId();
         this.description=c.getDescription();
+        this.seats= c.getSeats();
         this.street=c.getStreet();
         this.city=c.getCity();
         this.zip=c.getZip();
-        this.owner=c.getOwner();
+        this.ownerName =c.getOwner().getUsername();
         this.rating=c.getRating();
         this.numberOfRatings=c.getNumberOfRatings();
     }

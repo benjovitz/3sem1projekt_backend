@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/cinema/")
+@RequestMapping("/api/cinema/")
 public class CinemaController {
 
     CinemaService cinemaService;
@@ -25,8 +25,8 @@ public class CinemaController {
     List<CinemaResponse> getCinemas(){
         return cinemaService.getCinemas();
     }
-    @GetMapping("/{id}")
-    CinemaResponse getSpecificCinema(@PathVariable Long id){
+    @GetMapping("{id}")
+    public CinemaResponse getSpecificCinema(@PathVariable Long id){
         return cinemaService.findCinema(id);
     }
     /*

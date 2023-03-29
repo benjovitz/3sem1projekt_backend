@@ -1,5 +1,6 @@
 package dat3.voximovies.entity;
 
+import dat3.security.entity.Role;
 import dat3.security.entity.UserWithRoles;
 import dat3.voximovies.entity.Cinema;
 import jakarta.persistence.*;
@@ -48,7 +49,7 @@ public class User extends UserWithRoles {
   @UpdateTimestamp
   private LocalDateTime lastEdited;
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "reviewedUser")
   List<Review> reviews = new ArrayList<>();
 
   public void addReview(Review review) {
@@ -73,7 +74,6 @@ public class User extends UserWithRoles {
   private double ranking;
 
 
-  /*
   @OneToMany(mappedBy = "user")
   private List<Reservation> reservations;
 
@@ -84,7 +84,6 @@ public class User extends UserWithRoles {
     reservations.add(reservation);
   }
 
-   */
 
   public User(String user, String password, String email,
                 String fullName, String phone, String address, String city, String zip) {

@@ -29,7 +29,7 @@ public class ReservationService {
   }
 
 
-  public ReservationResponse getReservation(int id){
+  public ReservationResponse getReservation(long id){
     Reservation reservation = reservationRepository.findReservationById(id);
     return new ReservationResponse(reservation);
   }
@@ -40,7 +40,7 @@ public class ReservationService {
     return reservationResponses;
   }
 
-  public List<ReservationResponse> getAllShowReservations(String username, int showId){
+  public List<ReservationResponse> getAllShowReservations(String username, long showId){
     /*
 
     User user = userRepository.findByUsername(username)
@@ -64,6 +64,9 @@ public class ReservationService {
     if(!areSeatsAvailable((ArrayList<String>) rr.getSeats(),rr.getShowingId())){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Contains seats that are already reserved");
     }
+    if(rr.getSeats().isEmpty()){
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"You cannot make a reservation without seats");
+    }
     User user = userRepository.findByUsername(username);
     Showing showing = showingRepository.findShowingById(rr.getShowingId());
     Reservation newReservation = ReservationRequest.getReservationEntity(rr,user, showing);
@@ -72,20 +75,27 @@ public class ReservationService {
     return  new ReservationResponse(newReservation);
   }
 
-  public ReservationResponse updateReservation(String username, ReservationRequest rr){
-    Reservation updatedReservation = reservationRepository.findByUserUsernameAndShowingId(username,rr.getShowingId());
-    System.out.println(updatedReservation);
+  public ReservationResponse updateReservation(String username, ReservationRequest rr, long resId){
+    if(rr.getSeats().isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You cannot make a reservation without seats");
+    }
+    Reservation updatedReservation = reservationRepository.findReservationById(resId);
+    if(!updatedReservation.getShowing().getCinema().getOwner().getUsername().equals(username)){
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Reservation is not from your cinema");
+    }
+
     ArrayList<String> oldSeats = new ArrayList<>(updatedReservation.getSeats());
     ArrayList<String> newSeats = new ArrayList<>(rr.getSeats().stream().filter(r -> oldSeats.contains(r)).toList());
     if(!areSeatsAvailable(newSeats,rr.getShowingId())){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Contains seats that are already reserved");
     }
+
     updatedReservation.setSeats(rr.getSeats());
     reservationRepository.save(updatedReservation);
     return new ReservationResponse(updatedReservation);
   }
 
-  public void deleteReservation(String username, int id){
+  public void deleteReservation(String username, long id){
     if(!reservationRepository.existsByUserUsernameAndId(username, id)){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Username does not match with reservation-id");
     }
@@ -95,7 +105,7 @@ public class ReservationService {
     reservationRepository.deleteById(id);
   }
 
-  public boolean areSeatsAvailable(ArrayList<String> seats, int showingId){
+  public boolean areSeatsAvailable(ArrayList<String> seats, long showingId){
     List<Reservation> showingReservations = reservationRepository.findAllByShowingId(showingId);
       for(Reservation res : showingReservations){
         for(String seat : seats){

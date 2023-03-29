@@ -3,7 +3,16 @@ package dat3.voximovies.repository;
 import dat3.voximovies.entity.Showing;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ShowingRepository extends JpaRepository<Showing,Integer> {
+import java.util.ArrayList;
 
-  Showing findShowingById(int id);
+public interface ShowingRepository extends JpaRepository<Showing,Long> {
+
+  ArrayList<Showing> findAllByCinemaId(long id);
+
+  ArrayList<Showing> findAllByMovieId(long id);
+
+  Showing findShowingById(long id);
+
+  boolean existsByIdAndCinemaOwnerUsername(long id, String username);
+
 }
