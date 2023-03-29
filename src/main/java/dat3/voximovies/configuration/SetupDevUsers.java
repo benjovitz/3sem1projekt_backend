@@ -38,7 +38,8 @@ public class SetupDevUsers implements ApplicationRunner {
     ShowingRepository showingRepository;
     ReservationRepository reservationRepository;
     ReviewRepository reviewRepository;
-    ChatService chatService;
+    final String passwordUsedByAll;
+
 
 
     public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, CinemaRepository cinemaRepository, ReviewRepository reviewRepository, MovieRepository movieRepository, ShowingRepository showingRepository, ReservationRepository reservationRepository) {
@@ -49,14 +50,11 @@ public class SetupDevUsers implements ApplicationRunner {
         this.reviewRepository = reviewRepository;
         this.showingRepository=showingRepository;
         this.reservationRepository=reservationRepository;
-
-        this.showingRepository=showingRepository;
-        this.reservationRepository=reservationRepository;
     }
 
     @Override
     public void run(ApplicationArguments args) throws JsonProcessingException {
-        //setupCinemas();
+        setupCinemas();
     }
 
     private void setupCinemas() {

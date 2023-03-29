@@ -30,7 +30,7 @@ class CinemaServiceTest {
 
     @BeforeEach
     void setUp(){
-        cinemaService = new CinemaService(cinemaRepository);
+        //cinemaService = new CinemaService(cinemaRepository);
     }
     @Test
     void getCinemas(){

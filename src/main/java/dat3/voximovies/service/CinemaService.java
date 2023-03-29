@@ -3,7 +3,8 @@ package dat3.voximovies.service;
 import dat3.voximovies.dto.CinemaRequest;
 import dat3.voximovies.dto.CinemaResponse;
 import dat3.voximovies.entity.Cinema;
-import dat3.voximovies.repository.CinemaRepository;
+import dat3.voximovies.entity.Showing;
+import dat3.voximovies.repository.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,19 @@ import java.util.Optional;
 public class CinemaService {
 
     CinemaRepository cinemaRepository;
+    ReservationRepository reservationRepository;
+    ReviewRepository reviewRepository;
+    ShowingRepository showingRepository;
+    UserRepository userRepository;
 
-    public CinemaService(CinemaRepository cinemaRepository){
-        this.cinemaRepository=cinemaRepository;
+    public CinemaService(CinemaRepository cinemaRepository, ReservationRepository reservationRepository, ReviewRepository reviewRepository, ShowingRepository showingRepository, UserRepository userRepository) {
+        this.cinemaRepository = cinemaRepository;
+        this.reservationRepository = reservationRepository;
+        this.reviewRepository = reviewRepository;
+        this.showingRepository = showingRepository;
+        this.userRepository = userRepository;
     }
+
     public Cinema findCinemaByID(Long id) {
         Cinema cinema = cinemaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Cinema with this ID doesnt exist"));
         return cinema;
@@ -46,6 +56,10 @@ public class CinemaService {
 
     public void deleteCinema(Long id) {
         Cinema cinema = findCinemaByID(id);
+        ArrayList<Showing> showings = showingRepository.findAllByCinemaId(cinema.getId());
+        long showingID = showings.get(0).getId();
+        reservationRepository.deleteAllByShowingId(showingID);
+        showingRepository.deleteAllByCinema(cinema);
         cinemaRepository.delete(cinema);
     }
 
