@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -42,8 +43,8 @@ public class CinemaController {
     }
     @PreAuthorize("hasAuthority('CINEMATICER')")
     @DeleteMapping("/{id}")
-    void deleteCinema(@PathVariable Long id){
-        cinemaService.deleteCinema(id);
+    void deleteCinema(@PathVariable Long id, Principal p){
+        cinemaService.deleteCinema(id,p.getName());
     }
     @PreAuthorize("hasAuthority('CINEMATICER')")
     @PutMapping("/{id}")

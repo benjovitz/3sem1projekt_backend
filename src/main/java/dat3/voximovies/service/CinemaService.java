@@ -4,6 +4,7 @@ import dat3.voximovies.dto.CinemaRequest;
 import dat3.voximovies.dto.CinemaResponse;
 import dat3.voximovies.entity.Cinema;
 import dat3.voximovies.entity.Showing;
+import dat3.voximovies.entity.User;
 import dat3.voximovies.repository.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,13 +55,17 @@ public class CinemaService {
         return new CinemaResponse(cinema);
     }
 
-    public void deleteCinema(Long id) {
-        Cinema cinema = findCinemaByID(id);
-        ArrayList<Showing> showings = showingRepository.findAllByCinemaId(cinema.getId());
-        long showingID = showings.get(0).getId();
-        reservationRepository.deleteAllByShowingId(showingID);
-        showingRepository.deleteAllByCinema(cinema);
-        cinemaRepository.delete(cinema);
+    public void deleteCinema(Long id, String owner) {
+        User user = userRepository.findByUsername(owner);
+        if(cinemaRepository.existsCinemaByOwner(user)){
+            Cinema cinema = findCinemaByID(id);
+            ArrayList<Showing> showings = showingRepository.findAllByCinemaId(cinema.getId());
+            long showingID = showings.get(0).getId();
+            reservationRepository.deleteAllByShowingId(showingID);
+            showingRepository.deleteAllByCinema(cinema);
+            cinemaRepository.delete(cinema);
+        }
+
     }
 
     public CinemaResponse editCinema(Long id, CinemaRequest request) {
