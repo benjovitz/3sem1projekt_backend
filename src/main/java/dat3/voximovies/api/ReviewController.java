@@ -6,6 +6,7 @@ import dat3.voximovies.dto.ReviewResponse;
 import dat3.voximovies.entity.Cinema;
 import dat3.voximovies.service.CinemaService;
 import dat3.voximovies.service.ReviewService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/api/review/")
 public class ReviewController {
+
     ReviewService reviewService;
     CinemaService cinemaService;
 
@@ -22,14 +24,26 @@ public class ReviewController {
         this.cinemaService = cinemaService;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     List<ReviewResponse> getAllReviews(){
       return reviewService.getAllReviews();
     }
 
+    @PreAuthorize("hasAuthority('CINEMATICER')")
     @PostMapping("user/{username}")
     ReviewResponse createReviewForUser(@RequestBody ReviewRequest request,@PathVariable String username){
         return reviewService.createUserReview(request, username);
+    }
+
+    @GetMapping("user/{username}")
+    List<ReviewResponse> getUserReviews(@PathVariable String username){
+        return reviewService.getUserReviews(username);
+    }
+
+    @GetMapping("cinema/{id}")
+    List<ReviewResponse> getCinemaReviews(@PathVariable long id){
+        return reviewService.getCinemaReviews(id);
     }
 
     @PostMapping("cinema/{cinemaID}")

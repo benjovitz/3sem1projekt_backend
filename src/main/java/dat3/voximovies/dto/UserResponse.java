@@ -2,6 +2,7 @@ package dat3.voximovies.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import dat3.security.entity.Role;
 import dat3.voximovies.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,8 @@ public class UserResponse {
   String city;
   String zip;
   Double ranking;
+
+  List<Role> roles;
 
   String picture;
 
@@ -50,6 +53,7 @@ public class UserResponse {
     this.zip = u.getZip();
     this.ranking = u.getRanking();
     this.picture = u.getPicture();
+    this.roles = u.getRoles();
     /*if (reviews != null) {
       this.reviews = u.getReviews();
     }

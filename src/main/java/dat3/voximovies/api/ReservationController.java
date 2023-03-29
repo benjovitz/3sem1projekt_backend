@@ -35,7 +35,7 @@ public class ReservationController {
 
 
   @PreAuthorize("hasAuthority('CINEMATICER')")
-  @GetMapping("owner/{showingId}") //Untested
+  @GetMapping("cinema/{showingId}")
   public List<ReservationResponse> getAllShowReservations(Principal p, @PathVariable long showingId){
     return reservationService.getAllShowReservations(p.getName(),showingId);
   }
@@ -46,13 +46,13 @@ public class ReservationController {
     return reservationService.addReservation(p.getName(), body);
   }
 
-  @PreAuthorize("hasAuthority('USER')")
-  @PutMapping
-  public ReservationResponse updateReservation(Principal p, @RequestBody ReservationRequest body){
-    return reservationService.updateReservation(p.getName(), body);
+  @PreAuthorize("hasAuthority('CINEMATICER')")
+  @PutMapping("{id}")
+  public ReservationResponse updateReservation(Principal p, @RequestBody ReservationRequest body, @PathVariable long id){
+    return reservationService.updateReservation(p.getName(), body, id);
   }
 
-  @PreAuthorize("hasAuthority('USER')")
+  @PreAuthorize("hasAuthority('CINEMATICER')")
   @DeleteMapping("{id}")
   public void deleteReservation(Principal p, @PathVariable long id){
     reservationService.deleteReservation(p.getName(),id);

@@ -37,16 +37,19 @@ public class CinemaController {
         return cinemaService.addRating(id,rating);
     }
      */
+    @PreAuthorize("hasAnyAuthority('CINEMATICER')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     CinemaResponse addCinema(@RequestBody CinemaRequest request){
         return cinemaService.addCinema(request);
     }
-    @PreAuthorize("hasAuthority('ADMIN')")
+ 
+    @PreAuthorize("hasAuthority('CINEMATICER')")
     @DeleteMapping("/{id}")
     void deleteCinema(@PathVariable Long id){
         cinemaService.deleteCinema(id);
     }
-    @PreAuthorize("hasAuthority('ADMIN')")
+    
+    @PreAuthorize("hasAuthority('CINEMATICER')")
     @PutMapping("/{id}")
     CinemaResponse editCinema(@PathVariable Long id, @RequestBody CinemaRequest request){
         return cinemaService.editCinema(id, request);

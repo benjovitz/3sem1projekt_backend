@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -78,5 +79,19 @@ public class ReviewService {
       user.setRanking(rankValue);
     }
     userRepository.save(user);
+  }
+
+  public List<ReviewResponse> getCinemaReviews(long id) {
+    Cinema cinema = cinemaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Cinema with this ID doesnt exist"));
+      List<Review> reviews = reviewRepository.findReviewsByReviewedCinema(cinema);
+      List<ReviewResponse> reviewResponses = reviews.stream().map(r -> new ReviewResponse(r)).toList();
+      return reviewResponses;
+  }
+
+  public List<ReviewResponse> getUserReviews(String username) {
+      User user = userRepository.findById(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"User with this ID doesnt exist"));
+      List<Review> reviews = reviewRepository.findReviewsByReviewedUser(user);
+      List<ReviewResponse> reviewResponses = reviews.stream().map(r -> new ReviewResponse(r)).toList();
+      return reviewResponses;
   }
 }

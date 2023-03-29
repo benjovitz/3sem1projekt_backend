@@ -1,10 +1,22 @@
 package dat3.voximovies.configuration;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import dat3.security.entity.Role;
 import dat3.security.entity.UserWithRoles;
 import dat3.voximovies.entity.*;
 import dat3.voximovies.repository.*;
 
+
+
+import dat3.voximovies.entity.Cinema;
+import dat3.voximovies.entity.Review;
+import dat3.voximovies.repository.CinemaRepository;
+
+import dat3.voximovies.entity.User;
+
+import dat3.voximovies.repository.ReviewRepository;
+
+import dat3.voximovies.service.ChatService;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -26,7 +38,10 @@ public class SetupDevUsers implements ApplicationRunner {
     ShowingRepository showingRepository;
     ReservationRepository reservationRepository;
     ReviewRepository reviewRepository;
-    String passwordUsedByAll;
+    ChatService chatService;
+
+    String passwordUsedByAll = "test12";
+
 
     public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, CinemaRepository cinemaRepository, ReviewRepository reviewRepository, MovieRepository movieRepository, ShowingRepository showingRepository, ReservationRepository reservationRepository) {
         passwordUsedByAll = "test12";
@@ -36,10 +51,13 @@ public class SetupDevUsers implements ApplicationRunner {
         this.reviewRepository = reviewRepository;
         this.showingRepository=showingRepository;
         this.reservationRepository=reservationRepository;
+
+        this.showingRepository=showingRepository;
+        this.reservationRepository=reservationRepository;
     }
 
     @Override
-    public void run(ApplicationArguments args) {
+    public void run(ApplicationArguments args) throws JsonProcessingException {
         setupCinemas();
     }
 
@@ -62,7 +80,7 @@ public class SetupDevUsers implements ApplicationRunner {
       Cinema c2 = Cinema.builder().owner(user3).name("TestNavn1").description("Cozy and comfortable").zip("2100").street("Østerbrogade 12 3 th").city("København Ø").build();
       Cinema c3 = Cinema.builder().owner(user3).name("TestNavn2").description("Modern and spacious").zip("2300").street("Amagerbrogade 45 2 mf").city("København S").build();
       Cinema c4 = Cinema.builder().owner(user3).name("TestNavn3").description("Small but charming").zip("2200").street("Nørrebrogade 33 4 tv").city("København N").build();
-      List<String> seats = new ArrayList<>(Arrays.asList("a1", "a2", "a3", "a4", "b1", "b2", "b3", "c1", "c2"));
+      List<String> seats = new ArrayList<>(Arrays.asList("d1","d2","a1", "a2", "a3", "a4", "b1", "b2", "b3", "c1", "c2"));
       c1.setSeats(seats);
       c2.setSeats(seats);
       cinemaRepository.save(c1);

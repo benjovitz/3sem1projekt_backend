@@ -17,17 +17,18 @@ public class ReviewResponse {
     String comment;
     Double score;
     String username;
-    User reviewedUser;
+    String reviewedUser;
     String cinemaName;
 
     public ReviewResponse(Review review){
         this.comment=review.getComment();
         this.score=review.getScore();
-        this.username=review.getUsername();
+        this.username=review.getUser().getUsername();
         if (review.getReviewedCinema() != null) {
             this.cinemaName=review.getReviewedCinema().getName();
-        } else {
-            this.reviewedUser=review.getReviewedUser();
+        }
+        if (review.getReviewedUser() != null) {
+            this.reviewedUser=review.getReviewedUser().getUsername();
         }
     }
 

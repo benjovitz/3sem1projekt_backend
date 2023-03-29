@@ -9,6 +9,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -72,8 +74,12 @@ public class UserWithRoles implements UserDetails {
         this.password = passwordEncoder.encode(pw);
     }
 
-    public void addRole(Role role){
+    public Boolean addRole(Role role){
+      if (!roles.contains(role)) {
         roles.add(role);
+        return true;
+      }
+      return false;
     }
 
 

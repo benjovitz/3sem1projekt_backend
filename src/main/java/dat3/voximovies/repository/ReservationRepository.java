@@ -13,11 +13,10 @@ public interface ReservationRepository extends JpaRepository<Reservation,Long> {
 
   ArrayList<Reservation> findAllByShowingId(long showId);
 
-  Reservation findByUserUsernameAndShowingId(String username, long showId);
-
   boolean existsByUserUsernameAndShowingId(String username, long showId);
 
-  boolean existsByUserUsernameAndId(String username, long id);
+  boolean existsByShowingCinemaOwnerUsernameAndId(String username, long id);
+
 
   @Transactional
   void deleteAllByShowingId(long id);

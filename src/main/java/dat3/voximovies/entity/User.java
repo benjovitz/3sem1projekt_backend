@@ -1,5 +1,6 @@
 package dat3.voximovies.entity;
 
+import dat3.security.entity.Role;
 import dat3.security.entity.UserWithRoles;
 import dat3.voximovies.entity.Cinema;
 import jakarta.persistence.*;
