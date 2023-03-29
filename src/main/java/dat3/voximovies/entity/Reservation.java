@@ -42,13 +42,11 @@ public class Reservation {
     seats.addAll(addedSeats);
   }
 
-  private double priceSum;
 
   public Reservation(User user, Showing showing, List<String> seats) {
     this.user = user;
     this.showing = showing;
     this.seats = seats;
-    this.priceSum= showing.getPrice() * seats.size();
   }
 
 }
