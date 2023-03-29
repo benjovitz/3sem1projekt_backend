@@ -3,6 +3,7 @@ package dat3.voximovies.api;
 import dat3.security.entity.Role;
 import dat3.voximovies.dto.UserRequest;
 import dat3.voximovies.dto.UserResponse;
+import dat3.voximovies.service.CinemaService;
 import dat3.voximovies.service.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -22,9 +24,11 @@ import java.util.List;
 public class UserController {
 
   UserService userService;
+  CinemaService cinemaService;
 
-  public UserController(UserService userService) {
+  public UserController(UserService userService, CinemaService cinemaService) {
     this.userService = userService;
+    this.cinemaService = cinemaService;
   }
 
   @PreAuthorize("hasAuthority('ADMIN')")
@@ -41,10 +45,10 @@ public class UserController {
     return userService.addUser(body);
   }
 
-  @PreAuthorize("hasAuthority('ADMIN')")
-  @DeleteMapping("{username}")
-  void deleteUserByUsername(@PathVariable String username) {
-    userService.deleteUser(username);
+  @PreAuthorize("hasAuthority('USER')")
+  @DeleteMapping
+  void deleteUserByUsername(Principal p) {
+    userService.deleteUser(p.getName());
   }
 
   @PreAuthorize("hasAuthority('USER')")
