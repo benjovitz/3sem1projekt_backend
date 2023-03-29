@@ -8,9 +8,15 @@ import dat3.voximovies.entity.Showing;
 import dat3.voximovies.entity.User;
 import dat3.voximovies.repository.*;
 
+
+import dat3.voximovies.entity.Showing;
+import dat3.voximovies.entity.User;
+import dat3.voximovies.repository.*;
+
 import dat3.voximovies.entity.User;
 import dat3.voximovies.repository.CinemaRepository;
 import dat3.voximovies.repository.UserRepository;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +32,10 @@ import java.util.Optional;
 public class CinemaService {
 
     CinemaRepository cinemaRepository;
+    ReservationRepository reservationRepository;
+    ShowingRepository showingRepository;
+    UserRepository userRepository;
+
 
     ReservationRepository reservationRepository;
     ReviewRepository reviewRepository;
@@ -40,6 +50,7 @@ public class CinemaService {
         this.userRepository = userRepository;
 
  
+
     }
 
     public Cinema findCinemaByID(Long id) {

@@ -30,12 +30,15 @@ class CinemaServiceTest {
 
     @BeforeEach
     void setUp(){
-        //cinemaService = new CinemaService(cinemaRepository);
+
+        cinemaService = new CinemaService(cinemaRepository,null,null,null);
+
     }
     @Test
     void getCinemas(){
-        Cinema c1 = new Cinema();
-        Cinema c2 = new Cinema();
+        User user1 = new User("Lasse", "passwordUsedByAll", "u,mbjsak", "Lasse Dall", "1234", "Højgade 61", "København S", "2300");
+        Cinema c1 = Cinema.builder().owner(user1).build();
+        Cinema c2 = Cinema.builder().owner(user1).build();
 
         Mockito.when(cinemaRepository.findAll()).thenReturn(List.of(c1,c2));
         List<CinemaResponse> cr = cinemaService.getCinemas();
