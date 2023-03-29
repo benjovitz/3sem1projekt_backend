@@ -1,9 +1,12 @@
 package dat3.voximovies.dto;
 
+import dat3.security.entity.Role;
 import dat3.voximovies.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,6 +22,7 @@ public class UserRequest {
   String city;
   String zip;
 
+
   public static User getUserEntity(UserRequest u){
     return new User(u.username,u.getPassword(),u.getEmail(), u.fullName,u.getPhone(),u.getAddress(), u.getCity(), u.getZip());
   }
@@ -32,6 +36,7 @@ public class UserRequest {
     this.address = u.getAddress();
     this.city = u.getCity();
     this.zip = u.getZip();
+    }
   }
-}
+
 
