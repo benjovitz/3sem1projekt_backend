@@ -36,11 +36,8 @@ public class CinemaService {
     ShowingRepository showingRepository;
     UserRepository userRepository;
 
-
-    ReservationRepository reservationRepository;
     ReviewRepository reviewRepository;
-    ShowingRepository showingRepository;
-    UserRepository userRepository;
+
 
     public CinemaService(CinemaRepository cinemaRepository, ReservationRepository reservationRepository, ReviewRepository reviewRepository, ShowingRepository showingRepository, UserRepository userRepository) {
         this.cinemaRepository = cinemaRepository;
@@ -48,9 +45,6 @@ public class CinemaService {
         this.reviewRepository = reviewRepository;
         this.showingRepository = showingRepository;
         this.userRepository = userRepository;
-
- 
-
     }
 
     public Cinema findCinemaByID(Long id) {

@@ -19,9 +19,6 @@ public interface CinemaRepository extends JpaRepository<Cinema,Long> {
 
   boolean existsCinemaByOwner(User owner);
 
-
-  boolean existsCinemaByOwner(User owner);
-
   List<Cinema> findAllByOwner(User owner);
 
   Cinema findByName(String name);
