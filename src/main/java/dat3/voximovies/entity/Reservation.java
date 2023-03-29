@@ -30,6 +30,7 @@ public class Reservation {
   @ManyToOne
   private Showing showing;
 
+
   @Column(name = "res_seats")
   @ElementCollection
   private List<String> seats;
@@ -41,15 +42,14 @@ public class Reservation {
     seats.addAll(addedSeats);
   }
 
+  private double priceSum;
+
   public Reservation(User user, Showing showing, List<String> seats) {
     this.user = user;
     this.showing = showing;
     this.seats = seats;
+    this.priceSum= showing.getPrice() * seats.size();
   }
 
-  public Reservation(User user, Showing showing) {
-    this.user = user;
-    this.showing = showing;
-  }
 }
 

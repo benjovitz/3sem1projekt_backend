@@ -75,14 +75,21 @@ public class ReservationService {
     return  new ReservationResponse(newReservation);
   }
 
-  public ReservationResponse updateReservation(String username, ReservationRequest rr){
-    Reservation updatedReservation = reservationRepository.findByUserUsernameAndShowingId(username,rr.getShowingId());
-    System.out.println(updatedReservation);
+  public ReservationResponse updateReservation(String username, ReservationRequest rr, long resId){
+    if(rr.getSeats().isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You cannot make a reservation without seats");
+    }
+    Reservation updatedReservation = reservationRepository.findReservationById(resId);
+    if(!updatedReservation.getShowing().getCinema().getOwner().getUsername().equals(username)){
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Reservation is not from your cinema");
+    }
+
     ArrayList<String> oldSeats = new ArrayList<>(updatedReservation.getSeats());
     ArrayList<String> newSeats = new ArrayList<>(rr.getSeats().stream().filter(r -> oldSeats.contains(r)).toList());
     if(!areSeatsAvailable(newSeats,rr.getShowingId())){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Contains seats that are already reserved");
     }
+
     updatedReservation.setSeats(rr.getSeats());
     reservationRepository.save(updatedReservation);
     return new ReservationResponse(updatedReservation);
