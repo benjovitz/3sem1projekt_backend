@@ -36,7 +36,7 @@ public ReservationResponse(Reservation r){
   this.username=r.getUser().getUsername();
   this.showingId=r.getShowing().getId();
   this.seats=r.getSeats();
-  this.priceSum=r.getPriceSum();
+  this.priceSum=r.getShowing().getPrice()*r.getSeats().size();
   this.movieName=r.getShowing().getMovie().getName();
   this.cinemaName=r.getShowing().getCinema().getName();
   this.dateTime=r.getShowing().getDateTime();

@@ -3,14 +3,17 @@ package dat3.voximovies.service;
 import dat3.security.entity.Role;
 import dat3.voximovies.dto.UserRequest;
 import dat3.voximovies.dto.UserResponse;
+import dat3.voximovies.entity.Cinema;
+import dat3.voximovies.entity.Showing;
 import dat3.voximovies.entity.User;
-import dat3.voximovies.repository.UserRepository;
+import dat3.voximovies.repository.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,9 +21,19 @@ import java.util.Optional;
 public class UserService {
 
   UserRepository userRepository;
+  ReservationRepository reservationRepository;
+  CinemaRepository cinemaRepository;
+  ShowingRepository showingRepository;
 
-  public UserService(UserRepository userRepository) {
+  ReviewRepository reviewRepository;
+
+
+  public UserService(UserRepository userRepository, ReservationRepository reservationRepository, CinemaRepository cinemaRepository, ShowingRepository showingRepository, ReviewRepository reviewRepository) {
     this.userRepository = userRepository;
+    this.reservationRepository = reservationRepository;
+    this.cinemaRepository = cinemaRepository;
+    this.showingRepository = showingRepository;
+    this.reviewRepository = reviewRepository;
   }
 
   public List<UserResponse> getUsers(boolean includeAll) {
@@ -55,6 +68,18 @@ public class UserService {
 
   public void deleteUser(String username) {
     User user = userRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+    reservationRepository.deleteAllByUser(user);
+    if(cinemaRepository.existsCinemaByOwner(user)){
+      for (Cinema cinema : user.getCinemas()) {
+        ArrayList<Showing> showings = showingRepository.findAllByCinemaId(cinema.getId());
+        long showingID = showings.get(0).getId();
+        reservationRepository.deleteAllByShowingId(showingID);
+        showingRepository.deleteAllByCinema(cinema);
+        cinemaRepository.delete(cinema);
+      }
+    }
+    reviewRepository.deleteAllByUser(user);
+    reviewRepository.deleteAllByReviewedUser(user);
     userRepository.delete(user);
   }
 

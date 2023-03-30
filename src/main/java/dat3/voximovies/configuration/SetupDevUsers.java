@@ -38,9 +38,8 @@ public class SetupDevUsers implements ApplicationRunner {
     ShowingRepository showingRepository;
     ReservationRepository reservationRepository;
     ReviewRepository reviewRepository;
-    ChatService chatService;
+    final String passwordUsedByAll;
 
-    String passwordUsedByAll = "test12";
 
 
     public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, CinemaRepository cinemaRepository, ReviewRepository reviewRepository, MovieRepository movieRepository, ShowingRepository showingRepository, ReservationRepository reservationRepository) {
@@ -49,9 +48,6 @@ public class SetupDevUsers implements ApplicationRunner {
         this.movieRepository = movieRepository;
         this.cinemaRepository=cinemaRepository;
         this.reviewRepository = reviewRepository;
-        this.showingRepository=showingRepository;
-        this.reservationRepository=reservationRepository;
-
         this.showingRepository=showingRepository;
         this.reservationRepository=reservationRepository;
     }

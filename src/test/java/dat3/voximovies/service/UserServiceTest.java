@@ -33,7 +33,7 @@ class UserServiceTest {
 
   @BeforeEach
   void setUp() {
-    userService = new UserService(userRepository);
+    userService = new UserService(userRepository,null,null,null,null);
   }
 
   @Test

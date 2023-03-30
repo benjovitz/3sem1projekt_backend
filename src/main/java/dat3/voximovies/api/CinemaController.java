@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -25,6 +26,7 @@ public class CinemaController {
     List<CinemaResponse> getCinemas(){
         return cinemaService.getCinemas();
     }
+
     @GetMapping("{id}")
     public CinemaResponse getSpecificCinema(@PathVariable Long id){
         return cinemaService.findCinema(id);
@@ -40,14 +42,22 @@ public class CinemaController {
     CinemaResponse addCinema(@RequestBody CinemaRequest request){
         return cinemaService.addCinema(request);
     }
+ 
     @PreAuthorize("hasAuthority('CINEMATICER')")
     @DeleteMapping("/{id}")
-    void deleteCinema(@PathVariable Long id){
-        cinemaService.deleteCinema(id);
+    void deleteCinema(@PathVariable Long id, Principal p){
+        cinemaService.deleteCinema(id,p.getName());
     }
+    
     @PreAuthorize("hasAuthority('CINEMATICER')")
     @PutMapping("/{id}")
     CinemaResponse editCinema(@PathVariable Long id, @RequestBody CinemaRequest request){
         return cinemaService.editCinema(id, request);
     }
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/edit")
+    List<CinemaResponse> findCinemaByUsername(Principal p){
+        return cinemaService.getCinemasByUsername(p.getName());
+    }
+
 }
