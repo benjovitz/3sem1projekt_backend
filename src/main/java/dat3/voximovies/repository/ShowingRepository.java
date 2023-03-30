@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface ShowingRepository extends JpaRepository<Showing,Long> {
 
-  ArrayList<Showing> findAllShowing();
+  ArrayList<Showing> findAll();
   ArrayList<Showing> findAllByCinemaId(long id);
 
   ArrayList<Showing> findAllByCinemaOwnerUsername(String username);

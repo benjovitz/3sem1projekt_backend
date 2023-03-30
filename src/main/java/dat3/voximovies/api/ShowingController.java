@@ -32,13 +32,13 @@ public class ShowingController {
     return showingService.getAllShowingsWithMovieId(movieId);
   }
 
-  @PreAuthorize("hasAuthority('User') or hasAuthority('CINEMATICER')")
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('CINEMATICER')")
   @GetMapping("cinema/{cinemaId}")
   public List<ShowingResponse> getAllCinemaShows(@PathVariable long cinemaId){
     return showingService.getAllShowingsForCinema(cinemaId);
   }
 
-  @PreAuthorize("hasAuthority('User')")
+  @PreAuthorize("hasAuthority('USER')")
   @GetMapping("user")
   public List<ShowingResponse> getAllCurrentShows(){
     return showingService.getAllShowings();

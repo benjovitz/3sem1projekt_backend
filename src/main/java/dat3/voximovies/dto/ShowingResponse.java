@@ -32,7 +32,7 @@ public class ShowingResponse {
   String city;
 
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-  LocalDateTime localDateTime;
+  LocalDateTime dateTime;
 
   public ShowingResponse(Showing s) {
     this.Id=s.getId();
@@ -42,6 +42,6 @@ public class ShowingResponse {
     this.price = s.getPrice();
     this.resSeats = s.getOccupiedSeats();
     this.city = s.getCinema().getCity();
-    this.localDateTime = s.getDateTime();
+    this.dateTime = s.getDateTime();
   }
 }

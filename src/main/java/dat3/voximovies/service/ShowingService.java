@@ -46,7 +46,7 @@ public class ShowingService {
 
 
   public List<ShowingResponse> getAllShowings(){
-    List<Showing> movieList = showingRepository.findAllShowing();
+    List<Showing> movieList = showingRepository.findAll();
     List<Showing> movieListOpen = movieList.stream().filter(n-> n.getDateTime().isAfter(LocalDateTime.now().plusHours(1))).toList();
     List<ShowingResponse> showingResponses = movieListOpen.stream().map( s -> new ShowingResponse(s)).toList();
     return showingResponses;
