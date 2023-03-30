@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ShowingResponse {
 
+  long id;
   long cinemaId;
 
   String movieName;
@@ -32,6 +33,7 @@ public class ShowingResponse {
   LocalDateTime localDateTime;
 
   public ShowingResponse(Showing s) {
+    this.id=s.getId();
     this.cinemaId = s.getCinema().getId();
     this.movieName=s.getMovie().getName();
     this.cinemaName=s.getCinema().getName();

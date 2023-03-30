@@ -104,10 +104,24 @@ public class SetupDevUsers implements ApplicationRunner {
       Showing s1 = new Showing(movie1,c1,150, LocalDateTime.now().plusHours(6));
       Showing s2 = new Showing(movie1,c2,175, LocalDateTime.now().plusHours(2));
       Showing s3 = new Showing(movie2,c2,250, LocalDateTime.now().plusHours(5));
+      Showing s4 = new Showing(movie2,c1,400, LocalDateTime.now().plusHours(51));
+      Showing s5 = new Showing(movie2,c1,400, LocalDateTime.now().plusHours(55));
+      Showing s6 = new Showing(movie2,c1,400, LocalDateTime.now().plusHours(56));
+      Showing s7 = new Showing(movie2,c1,400, LocalDateTime.now().plusHours(57));
+      Showing s8 = new Showing(movie2,c1,400, LocalDateTime.now().plusHours(58));
+      Showing s9 = new Showing(movie2,c1,400, LocalDateTime.now().plusHours(59));
+      Showing s10 = new Showing(movie2,c1,400, LocalDateTime.now().plusHours(60));
 
         showingRepository.save(s1);
         showingRepository.save(s2);
         showingRepository.save(s3);
+        showingRepository.save(s4);
+        showingRepository.save(s5);
+        showingRepository.save(s6);
+        showingRepository.save(s7);
+        showingRepository.save(s8);
+        showingRepository.save(s9);
+        showingRepository.save(s10);
 
       Reservation r1 = new Reservation(user1,s1, new ArrayList<>(Arrays.asList("a1","a2")));
       Reservation r2 = new Reservation(user1,s3, new ArrayList<>(Arrays.asList("c3","c4")));
