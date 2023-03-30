@@ -69,16 +69,21 @@ public class SetupDevUsers implements ApplicationRunner {
         user1.addRole(Role.CINEMATICER);
         user2.addRole(Role.USER);
         user3.addRole(Role.CINEMATICER);
+        Cinema c1 = Cinema.builder().owner(user1).name("Daniels Bio").description("God hjemmebio").zip("2000").street("Aurikelvej 6 1 tv").city("Frederiksberg").build();
+        Review review2 = new Review(user3, 5.0, "Super sød type", user1);
+        user1.addCinema(c1);
+        user1.addUserReview(review2);
       userWithRolesRepository.save(user1);
       userWithRolesRepository.save(user2);
       userWithRolesRepository.save(user3);
-      Cinema c1 = Cinema.builder().owner(user1).name("Daniels Bio").description("God hjemmebio").zip("2000").street("Aurikelvej 6 1 tv").city("Frederiksberg").build();
+
       Cinema c2 = Cinema.builder().owner(user3).name("TestNavn1").description("Cozy and comfortable").zip("2100").street("Østerbrogade 12 3 th").city("København Ø").build();
       Cinema c3 = Cinema.builder().owner(user3).name("TestNavn2").description("Modern and spacious").zip("2300").street("Amagerbrogade 45 2 mf").city("København S").build();
       Cinema c4 = Cinema.builder().owner(user3).name("TestNavn3").description("Small but charming").zip("2200").street("Nørrebrogade 33 4 tv").city("København N").build();
       List<String> seats = new ArrayList<>(Arrays.asList("d1","d2","a1", "a2", "a3", "a4", "b1", "b2", "b3", "c1", "c2"));
       c1.setSeats(seats);
       c2.setSeats(seats);
+
       cinemaRepository.save(c1);
       cinemaRepository.save(c2);
       cinemaRepository.save(c3);
@@ -87,7 +92,7 @@ public class SetupDevUsers implements ApplicationRunner {
 
 
       Review review1 = new Review(user2, 1.0, "Meget lille skærm", c1);
-      Review review2 = new Review(user3, 5.0, "Super sød type", user1);
+
 
         reviewRepository.save(review1);
         reviewRepository.save(review2);
