@@ -34,12 +34,29 @@ public class ShowingService {
   }
 
 
+
+
   public ShowingResponse getShowingById(long showId){
     if(!showingRepository.existsById(showId)){
       throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Show with this ID doesn't exist");
     }
     Showing showing = showingRepository.findShowingById(showId);
     return new ShowingResponse(showing);
+  }
+
+
+  public List<ShowingResponse> getAllShowings(){
+    List<Showing> movieList = showingRepository.findAllShowing();
+    List<Showing> movieListOpen = movieList.stream().filter(n-> n.getDateTime().isAfter(LocalDateTime.now().plusHours(1))).toList();
+    List<ShowingResponse> showingResponses = movieListOpen.stream().map( s -> new ShowingResponse(s)).toList();
+    return showingResponses;
+  }
+
+  public List<ShowingResponse> getAllShowingsOfOwner(String username){
+    List<Showing> movieList = showingRepository.findAllByCinemaOwnerUsername(username);
+    List<Showing> movieListOpen = movieList.stream().filter(n-> n.getDateTime().isAfter(LocalDateTime.now().minusHours(5))).toList();
+    List<ShowingResponse> showingResponses = movieListOpen.stream().map( s -> new ShowingResponse(s)).toList();
+    return showingResponses;
   }
 
   public List<ShowingResponse> getAllShowingsWithMovieId(long movieId){
