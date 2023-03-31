@@ -37,7 +37,7 @@ public class CinemaController {
         return cinemaService.addRating(id,rating);
     }
      */
-    @PreAuthorize("hasAnyAuthority('CINEMATICER')")
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     CinemaResponse addCinema(@RequestBody CinemaRequest request,Principal p){
         return cinemaService.addCinema(request,p.getName());
