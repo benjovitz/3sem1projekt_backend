@@ -16,6 +16,10 @@ import java.util.List;
 @NoArgsConstructor
 public class ShowingResponse {
 
+
+  long id;
+=======
+
   long cinemaId;
 
   String movieName;
@@ -28,15 +32,19 @@ public class ShowingResponse {
 
   private List<String> resSeats = new ArrayList<>();
 
+  String city;
+
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-  LocalDateTime localDateTime;
+  LocalDateTime dateTime;
 
   public ShowingResponse(Showing s) {
+    this.id=s.getId();
     this.cinemaId = s.getCinema().getId();
     this.movieName=s.getMovie().getName();
     this.cinemaName=s.getCinema().getName();
     this.price = s.getPrice();
     this.resSeats = s.getOccupiedSeats();
-    this.localDateTime = s.getDateTime();
+    this.city = s.getCinema().getCity();
+    this.dateTime = s.getDateTime();
   }
 }
