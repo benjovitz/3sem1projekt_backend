@@ -9,7 +9,10 @@ import java.util.ArrayList;
 
 public interface ShowingRepository extends JpaRepository<Showing,Long> {
 
+  ArrayList<Showing> findAll();
   ArrayList<Showing> findAllByCinemaId(long id);
+
+  ArrayList<Showing> findAllByCinemaOwnerUsername(String username);
 
   ArrayList<Showing> findAllByMovieId(long id);
 

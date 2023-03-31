@@ -101,9 +101,9 @@ public class SetupDevUsers implements ApplicationRunner {
         movieRepository.save(movie2);
         movieRepository.save(movie3);
 
-      Showing s1 = new Showing(movie1,c1,150, LocalDateTime.now().plusHours(6));
-      Showing s2 = new Showing(movie1,c2,175, LocalDateTime.now().plusHours(2));
-      Showing s3 = new Showing(movie2,c2,250, LocalDateTime.now().plusHours(5));
+      Showing s1 = new Showing(movie1,c1,150, LocalDateTime.now().plusHours(6).plusDays(3));
+      Showing s2 = new Showing(movie1,c2,175, LocalDateTime.now().plusHours(2).plusDays(5));
+      Showing s3 = new Showing(movie2,c2,250, LocalDateTime.now().plusHours(5).plusDays(8));
 
         showingRepository.save(s1);
         showingRepository.save(s2);
