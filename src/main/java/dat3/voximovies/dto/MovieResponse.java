@@ -18,12 +18,17 @@ public class MovieResponse {
     private  String description;
     private String genre;
 
+    private String poster;
+
     public MovieResponse(Movie movie){
         this.id = movie.getId();
         this.name = movie.getName();
         this.playTime = movie.getPlayTime();
         this.description = movie.getDescription();
         this.genre = movie.getGenre();
+        if (movie.getPoster() != null) {
+            this.poster = movie.getPoster();
+        }
 
     }
 
