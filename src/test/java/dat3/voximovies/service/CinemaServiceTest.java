@@ -5,6 +5,7 @@ import dat3.voximovies.dto.CinemaResponse;
 import dat3.voximovies.entity.Cinema;
 import dat3.voximovies.entity.User;
 import dat3.voximovies.repository.CinemaRepository;
+import dat3.voximovies.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,13 +26,15 @@ class CinemaServiceTest {
 
     @Mock
     CinemaRepository cinemaRepository;
+    @Mock
+    UserRepository userRepository;
 
     CinemaService cinemaService;
 
     @BeforeEach
     void setUp(){
 
-        cinemaService = new CinemaService(cinemaRepository,null,null,null,null);
+        cinemaService = new CinemaService(cinemaRepository,null,null,null,userRepository);
 
     }
     @Test
@@ -50,10 +53,11 @@ class CinemaServiceTest {
         User user1 = new User("Lasse", "aasd", "u,mbjsak", "Lasse Dall", "1234", "Højgade 61", "København S", "2300");
         Cinema c1 = Cinema.builder().owner(user1).name("Daniels Bio").description("God hjemmebio").zip("2000").street("Aurikelvej 6 1 tv").city("Frederiksberg").build();
         Mockito.when(cinemaRepository.save(any(Cinema.class))).thenReturn(c1);
+        Mockito.when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
 
         CinemaRequest cinemaRequest = new CinemaRequest(c1);
 
-        CinemaResponse cinemaResponse = cinemaService.addCinema(cinemaRequest);
+        CinemaResponse cinemaResponse = cinemaService.addCinema(cinemaRequest,user1.getUsername());
 
         assertEquals("Daniels Bio",cinemaResponse.getName());
     }

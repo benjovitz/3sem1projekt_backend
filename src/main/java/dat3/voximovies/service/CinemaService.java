@@ -1,5 +1,6 @@
 package dat3.voximovies.service;
 
+import dat3.security.entity.Role;
 import dat3.voximovies.dto.CinemaRequest;
 import dat3.voximovies.dto.CinemaResponse;
 import dat3.voximovies.entity.Cinema;
@@ -63,8 +64,13 @@ public class CinemaService {
         return new CinemaResponse(cinema);
     }
 
-    public CinemaResponse addCinema(CinemaRequest request) {
+    public CinemaResponse addCinema(CinemaRequest request, String username) {
         Cinema cinema = CinemaRequest.getCinemaEntity(request);
+        User owner = userRepository.findByUsername(username);
+        cinema.setOwner(owner);
+        owner.addRole(Role.CINEMATICER);
+        owner.addCinema(cinema);
+        userRepository.save(owner);
         cinemaRepository.save(cinema);
         return new CinemaResponse(cinema);
     }

@@ -118,10 +118,6 @@ public class SetupDevUsers implements ApplicationRunner {
       Showing s9 = new Showing(movie2,c1,400, LocalDateTime.now().plusHours(59));
       Showing s10 = new Showing(movie2,c1,400, LocalDateTime.now().plusHours(60));
 
-      Showing s1 = new Showing(movie1,c1,150, LocalDateTime.now().plusHours(6).plusDays(3));
-      Showing s2 = new Showing(movie1,c2,175, LocalDateTime.now().plusHours(2).plusDays(5));
-      Showing s3 = new Showing(movie2,c2,250, LocalDateTime.now().plusHours(5).plusDays(8));
-
 
         showingRepository.save(s1);
         showingRepository.save(s2);
