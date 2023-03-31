@@ -107,7 +107,9 @@ public class SetupDevUsers implements ApplicationRunner {
         movieRepository.save(movie3);
 
 
-
+      Showing s1 = new Showing(movie1,c1,150, LocalDateTime.now().plusHours(6));
+      Showing s2 = new Showing(movie1,c2,175, LocalDateTime.now().plusHours(2));
+      Showing s3 = new Showing(movie2,c2,250, LocalDateTime.now().plusHours(5));
       Showing s4 = new Showing(movie2,c1,400, LocalDateTime.now().plusHours(51));
       Showing s5 = new Showing(movie2,c1,400, LocalDateTime.now().plusHours(55));
       Showing s6 = new Showing(movie2,c1,400, LocalDateTime.now().plusHours(56));
@@ -117,8 +119,6 @@ public class SetupDevUsers implements ApplicationRunner {
       Showing s10 = new Showing(movie2,c1,400, LocalDateTime.now().plusHours(60));
 
 
-
-      
         showingRepository.save(s1);
         showingRepository.save(s2);
         showingRepository.save(s3);
