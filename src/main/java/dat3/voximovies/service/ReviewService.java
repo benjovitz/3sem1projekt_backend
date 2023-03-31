@@ -38,7 +38,7 @@ public class ReviewService {
         User user = userRepository.findById(username).orElseThrow();
         review.setUser(user);
         reviewRepository.save(review);
-        addRating(request.getCinema(),request.getRating());
+        addRating(cinema,request.getRating());
         return new ReviewResponse(review);
     }
 
