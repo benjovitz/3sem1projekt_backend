@@ -22,17 +22,22 @@ public class MovieRequest {
     private  String description;
     private String genre;
 
+    private String poster;
+
 
     public static Movie getMovieEntity(MovieRequest movieRequest){
-        return new Movie(movieRequest.name, movieRequest.playTime, movieRequest.description, movieRequest.genre);
+        return new Movie(movieRequest.name, movieRequest.playTime, movieRequest.description, movieRequest.genre, movieRequest.poster);
     }
 
 
-    public MovieRequest(Movie movie){
+    public MovieRequest(Movie movie) {
         this.name = movie.getName();
         this.playTime = movie.getPlayTime();
         this.description = movie.getDescription();
         this.genre = movie.getGenre();
+        if (movie.getPoster() != null) {
+            this.poster = movie.getPoster();
+        }
     }
 
 

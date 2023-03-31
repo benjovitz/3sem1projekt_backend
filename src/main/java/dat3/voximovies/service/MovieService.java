@@ -72,6 +72,7 @@ public class MovieService {
             .uri(URI.create("https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=" + movieKey + "&currentCountry=US"))
             .header("X-RapidAPI-Key", apiKey)
             .header("X-RapidAPI-Host", "imdb8.p.rapidapi.com")
+            .header("Content-Type", "application/json")
             .method("GET", HttpRequest.BodyPublishers.noBody())
             .build();
         HttpResponse<String> response = null;
@@ -93,10 +94,11 @@ public class MovieService {
             int playTime = jsonNode.get("title").get("runningTimeInMinutes").asInt();
             String description = jsonNode.get("plotOutline").get("text").asText();
             String genre = jsonNode.get("genres").get(0).asText();
+            String poster = jsonNode.get("title").get("image").get("url").asText();
 
             double playTimeAsDouble = (double) playTime;
 
-            MovieRequest movieRequest = new MovieRequest(title, playTimeAsDouble, description, genre);
+            MovieRequest movieRequest = new MovieRequest(title, playTimeAsDouble, description, genre, poster);
             Movie movie = MovieRequest.getMovieEntity(movieRequest);
 
             movieRepository.save(movie);
@@ -116,6 +118,7 @@ public class MovieService {
         Optional.ofNullable(body.getName()).ifPresent(movieToEdit::setName);
         Optional.ofNullable(body.getDescription()).ifPresent(movieToEdit::setDescription);
         Optional.ofNullable(body.getGenre()).ifPresent(movieToEdit::setGenre);
+        Optional.ofNullable(body.getPoster()).ifPresent(movieToEdit::setPoster);
         movieRepository.save(movieToEdit);
 
         return new ResponseEntity(true, HttpStatus.OK);

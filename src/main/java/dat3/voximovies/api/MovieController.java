@@ -41,6 +41,7 @@ public class MovieController {
 
     @PostMapping(path = "{movieKey}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     MovieResponse addMovieWithKey(@PathVariable String movieKey) {
+        System.out.println(movieKey);
         return movieService.addMovieFromAPI(movieKey);
     }
 
