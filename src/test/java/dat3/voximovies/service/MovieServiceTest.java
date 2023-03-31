@@ -63,7 +63,7 @@ class MovieServiceTest {
     @Test
     void editMovies(){
 
-        Movie movie1 = new Movie(1,"Up", 1.20, "feel good family movie", "family");
+        Movie movie1 = new Movie("up",1.8, "god film", "feel good family movie", "family");
 
         Mockito.when(movieRepository.findById(movie1.getId())).thenReturn(Optional.of(movie1));
         MovieRequest mr = new MovieRequest(movie1);
