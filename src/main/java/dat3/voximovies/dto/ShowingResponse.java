@@ -18,7 +18,6 @@ public class ShowingResponse {
 
 
   long id;
-=======
 
   long cinemaId;
 
