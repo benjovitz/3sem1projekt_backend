@@ -21,6 +21,8 @@ public class ShowingResponse {
 
   long cinemaId;
 
+  long movieId;
+
   String movieName;
 
 
@@ -39,6 +41,7 @@ public class ShowingResponse {
   public ShowingResponse(Showing s) {
     this.id=s.getId();
     this.cinemaId = s.getCinema().getId();
+    this.movieId = s.getMovie().getId();
     this.movieName=s.getMovie().getName();
     this.cinemaName=s.getCinema().getName();
     this.price = s.getPrice();

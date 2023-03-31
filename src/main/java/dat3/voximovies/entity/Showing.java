@@ -1,6 +1,7 @@
 package dat3.voximovies.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -45,6 +46,7 @@ public class Showing {
   double price;
 
   @Nonnull
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
   LocalDateTime dateTime;
 
   public Showing(Movie movie, Cinema cinema, double price, LocalDateTime date) {
