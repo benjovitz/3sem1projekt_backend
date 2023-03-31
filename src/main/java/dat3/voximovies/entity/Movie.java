@@ -21,13 +21,13 @@ public class Movie {
     private long id;
     private String name;
     private double playTime;
-    private  String descripion;
+    private  String description;
     private String genre;
 
-    public Movie(String name, double playTime, String descripion, String genre){
+    public Movie(String name, double playTime, String description, String genre){
         this.name = name;
         this.playTime = playTime;
-        this.descripion = descripion;
+        this.description = description;
         this.genre = genre;
 
     }

@@ -15,14 +15,14 @@ public class MovieResponse {
     private long id;
     private String name;
     private double playTime;
-    private  String descripion;
+    private  String description;
     private String genre;
 
     public MovieResponse(Movie movie){
         this.id = movie.getId();
         this.name = movie.getName();
         this.playTime = movie.getPlayTime();
-        this.descripion = movie.getDescripion();
+        this.description = movie.getDescription();
         this.genre = movie.getGenre();
 
     }
