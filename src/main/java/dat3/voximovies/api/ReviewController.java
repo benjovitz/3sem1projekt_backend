@@ -9,6 +9,7 @@ import dat3.voximovies.service.ReviewService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -32,8 +33,8 @@ public class ReviewController {
 
     @PreAuthorize("hasAuthority('CINEMATICER')")
     @PostMapping("user/{username}")
-    ReviewResponse createReviewForUser(@RequestBody ReviewRequest request,@PathVariable String username){
-        return reviewService.createUserReview(request, username);
+    ReviewResponse createReviewForUser(@RequestBody ReviewRequest request,@PathVariable String username, Principal p){
+        return reviewService.createUserReview(request, username, p.getName());
     }
 
     @GetMapping("user/{username}")
@@ -47,7 +48,7 @@ public class ReviewController {
     }
 
     @PostMapping("cinema/{cinemaID}")
-    ReviewResponse createReviewForCinema(@RequestBody ReviewRequest request,@PathVariable String cinemaID){
-        return reviewService.createCinemaReview(request, Long.valueOf(cinemaID));
+    ReviewResponse createReviewForCinema(@RequestBody ReviewRequest request, @PathVariable String cinemaID, Principal p){
+        return reviewService.createCinemaReview(request, Long.valueOf(cinemaID), p.getName());
     }
 }

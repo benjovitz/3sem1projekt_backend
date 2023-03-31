@@ -19,19 +19,19 @@ public class MovieRequest {
 
     private String name;
     private double playTime;
-    private  String descripion;
+    private  String description;
     private String genre;
 
 
     public static Movie getMovieEntity(MovieRequest movieRequest){
-        return new Movie(movieRequest.name, movieRequest.playTime, movieRequest.descripion, movieRequest.genre);
+        return new Movie(movieRequest.name, movieRequest.playTime, movieRequest.description, movieRequest.genre);
     }
 
 
     public MovieRequest(Movie movie){
         this.name = movie.getName();
         this.playTime = movie.getPlayTime();
-        this.descripion = movie.getDescripion();
+        this.description = movie.getDescription();
         this.genre = movie.getGenre();
     }
 

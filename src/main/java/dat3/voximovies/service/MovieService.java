@@ -114,7 +114,7 @@ public class MovieService {
 
         Movie movieToEdit =  findMovie(id);
         Optional.ofNullable(body.getName()).ifPresent(movieToEdit::setName);
-        Optional.ofNullable(body.getDescripion()).ifPresent(movieToEdit::setDescripion);
+        Optional.ofNullable(body.getDescription()).ifPresent(movieToEdit::setDescription);
         Optional.ofNullable(body.getGenre()).ifPresent(movieToEdit::setGenre);
         movieRepository.save(movieToEdit);
 

@@ -31,20 +31,22 @@ public class ReviewService {
         this.userRepository = userRepository;
     }
 
-    public ReviewResponse createCinemaReview(ReviewRequest request, Long id) {
+    public ReviewResponse createCinemaReview(ReviewRequest request, Long id, String username) {
         Review review = ReviewRequest.getReviewEntity(request);
         Cinema cinema = cinemaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Cinema with this ID doesnt exist"));
         review.setReviewedCinema(cinema);
+        User user = userRepository.findById(username).orElseThrow();
+        review.setUser(user);
         reviewRepository.save(review);
         addRating(request.getCinema(),request.getRating());
         return new ReviewResponse(review);
     }
 
-    public ReviewResponse createUserReview(ReviewRequest request, String username) {
+    public ReviewResponse createUserReview(ReviewRequest request, String username, String reviewerUsername) {
         Review review = ReviewRequest.getReviewEntity(request);
         User reviewedUser = userRepository.findById(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"User with this ID doesnt exist"));
         review.setReviewedUser(reviewedUser);
-        User user = userRepository.findById(request.getUsername()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"User with this ID doesnt exist"));
+        User user = userRepository.findById(reviewerUsername).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"User with this ID doesnt exist"));
         review.setUser(user);
         reviewRepository.save(review);
         updateRanking(reviewedUser, review.getScore());

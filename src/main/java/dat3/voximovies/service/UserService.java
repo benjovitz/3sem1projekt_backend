@@ -86,13 +86,27 @@ public class UserService {
   public ResponseEntity<Boolean> updateUser(String username, UserRequest userRequest) {
     User updatedUser = userRepository.findById(username).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-    Optional.ofNullable(userRequest.getEmail()).ifPresent(updatedUser::setEmail);
-    Optional.ofNullable(userRequest.getPassword()).ifPresent(updatedUser::setPassword);
-    Optional.ofNullable(userRequest.getCity()).ifPresent(updatedUser::setCity);
-    Optional.ofNullable(userRequest.getFullName()).ifPresent(updatedUser::setFullName);
-    Optional.ofNullable(userRequest.getPhone()).ifPresent(updatedUser::setPhone);
-    Optional.ofNullable(userRequest.getAddress()).ifPresent(updatedUser::setAddress);
-    Optional.ofNullable(userRequest.getZip()).ifPresent(updatedUser::setZip);
+    if (!userRequest.getEmail().equals("")) {
+      updatedUser.setEmail(userRequest.getEmail());
+    }
+    if (!userRequest.getPassword().equals("")) {
+      updatedUser.setPassword(userRequest.getPassword());
+    }
+    if (!userRequest.getCity().equals("")) {
+      updatedUser.setCity(userRequest.getCity());
+    }
+    if (!userRequest.getFullName().equals("")) {
+      updatedUser.setFullName(userRequest.getFullName());
+    }
+    if (!userRequest.getPhone().equals("")) {
+      updatedUser.setPhone(userRequest.getPhone());
+    }
+    if (!userRequest.getAddress().equals("")) {
+      updatedUser.setAddress(userRequest.getAddress());
+    }
+    if (!userRequest.getZip().equals("")) {
+      updatedUser.setZip(userRequest.getZip());
+    }
 
     userRepository.save(updatedUser);
     return new ResponseEntity<Boolean>(true,HttpStatus.OK);
