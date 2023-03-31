@@ -3,6 +3,9 @@ package dat3.voximovies.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import dat3.security.entity.Role;
+import dat3.voximovies.entity.Cinema;
+import dat3.voximovies.entity.Reservation;
+import dat3.voximovies.entity.Review;
 import dat3.voximovies.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,11 +34,13 @@ public class UserResponse {
 
   String picture;
 
-  //List<Reservation> reservations;
+  List<ReservationResponse> reservations;
 
-  //List<Review> userReviews;
+  List<ReviewResponse> userReviews;
 
-  //List<Review> reviews;
+  List<ReviewResponse> reviews;
+
+  List<String> cinemas;
 
   @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
   LocalDateTime created;
@@ -54,15 +59,19 @@ public class UserResponse {
     this.ranking = u.getRanking();
     this.picture = u.getPicture();
     this.roles = u.getRoles();
-    /*if (reviews != null) {
-      this.reviews = u.getReviews();
+    if (u.getReviews() != null) {
+      this.reviews = u.getReviews().stream().map(r->new ReviewResponse(r)).toList();
     }
     if (u.getReservations() != null) {
       this.reservations = getReservations();
     }
-    if (userReviews != null) {
+    if (u.getUserReviews() != null) {
       this.userReviews = getUserReviews();
-    }*/
+    }
+    if(u.getCinemas()!=null){
+      List<String> cinemaNames = u.getCinemas().stream().map(c->c.getName()).toList();
+      this.cinemas=cinemaNames;
+    }
     if(includeAll){
       this.created = u.getCreated();
       this.edited = u.getLastEdited();

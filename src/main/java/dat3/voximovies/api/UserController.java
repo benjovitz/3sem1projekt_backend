@@ -37,7 +37,9 @@ public class UserController {
 
   @PreAuthorize("hasAuthority('ADMIN')")
   @GetMapping("{username}")
-  UserResponse getUserById(@PathVariable String username) throws Exception {return userService.findUserByUsername(username);}
+  UserResponse getUserById(@PathVariable String username) throws Exception {
+    return userService.findUserByUsername(username);
+  }
 
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,13 +59,12 @@ public class UserController {
     return userService.updateUser(username, body);
   }
 
-  /*
-  @PatchMapping("ranking/{username}/{value}")
-  void updateRankingForUser(@PathVariable String username, @PathVariable int value) {
-    userService.updateRanking(username, value);
+  @PreAuthorize("hasAnyAuthority('USER')")
+  @GetMapping("userprofile")
+  UserResponse getUserForProfile(Principal p){
+    return userService.findUserByUsername(p.getName());
   }
 
-   */
 
   @PreAuthorize("hasAuthority('ADMIN')")
   @PatchMapping("admin/{username}/{role}")
